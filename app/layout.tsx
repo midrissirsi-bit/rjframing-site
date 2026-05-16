@@ -107,36 +107,36 @@ const schema = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Custom Home Framing",
+          name: "Wood Framing",
           description:
-            "Foundation-to-roof framing for new residential builds 2,000–8,000 sq ft across the GTA.",
+            "Full residential wood framing — custom homes, additions, second-storey builds. Stud walls, joists, plates, rafters, sheathing across the GTA.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Home Additions",
+          name: "Steel Framing",
           description:
-            "Second-storey additions, rear extensions, kitchen blowouts with seamless tie-ins to existing structure.",
+            "Steel-stud framing for commercial buildouts, multi-storey, and fire-rated assemblies. Pre-engineered or shop-cut to spec.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Structural Steel Installation",
+          name: "Structural Steel Beams and Columns",
           description:
-            "W-flange beams, columns, and moment frames installed to engineering spec for open-concept residential and commercial builds.",
+            "W-flange beams, HSS columns, and moment frames installed to engineering specification across the Greater Toronto Area.",
         },
       },
       {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Commercial Framing",
+          name: "Back Framing",
           description:
-            "Retail buildouts, office shells, and warehouse interiors. Fast, cost-controlled, on schedule.",
+            "Renovation framing, tie-ins, blocking, and structural reinforcement on existing builds.",
         },
       },
     ],
