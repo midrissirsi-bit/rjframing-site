@@ -8,28 +8,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const caps = [
   {
-    num: "01 / CUSTOM HOMES",
-    title: "Custom Home",
+    num: "01 / WOOD",
+    title: "Wood",
     em: "Framing",
-    desc: "Foundation to roof on new builds 2,000–8,000 sq ft. We work from your architect's drawings or walk the site with you and rough out the plan. Daily progress photos so you always know what stage we're at.",
+    desc: "Custom homes, additions, second-storey builds. Stud walls, floor joists, top plates, rafters — full residential framing from foundation to roof. We work from your architect's drawings or rough it out with you on site.",
   },
   {
-    num: "02 / ADDITIONS",
-    title: "Home",
-    em: "Additions",
-    desc: "Second storeys, rear additions, kitchen blowouts. Seamless tie-ins to existing structure, engineered around the quirks of the original house. Built to disappear into what's already there.",
-  },
-  {
-    num: "03 / STEEL",
-    title: "Structural",
-    em: "Steel",
-    desc: "Beams, columns, and moment frames installed to engineering spec, signed off, and ready for inspection. We take the open-concept main floors that scare other crews — the kind that hold up half a house on one steel beam.",
-  },
-  {
-    num: "04 / COMMERCIAL",
-    title: "Commercial",
+    num: "02 / STEEL FRAME",
+    title: "Steel",
     em: "Framing",
-    desc: "Retail buildouts, office shells, warehouse interiors. We work clean, work fast, and don't hold up the trades behind us. Cost-controlled, schedule-controlled, no surprises.",
+    desc: "Steel-stud framing for commercial buildouts, multi-storey, and fire-rated assemblies. Faster than wood for high partition counts, dead-flat walls every time. Pre-engineered or shop-cut to spec.",
+  },
+  {
+    num: "03 / STRUCTURE",
+    title: "Steel Beams",
+    em: "& Columns",
+    desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection. We pull the open-concept jobs that scare other crews — the kind that hold up half a house on one beam.",
+  },
+  {
+    num: "04 / BACK FRAMING",
+    title: "Back",
+    em: "Framing",
+    desc: "Renovation work and tie-ins. Backing for fixtures, blocking, structural reinforcement on existing builds. The detail framing that makes the next trade's job clean.",
   },
 ];
 
@@ -42,8 +42,13 @@ export function Capabilities() {
       gsap.fromTo(
         headRef.current.querySelector("h2"),
         { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: headRef.current, start: "top 80%", once: true } },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: { trigger: headRef.current, start: "top 80%", once: true },
+        },
       );
     }
     const items = listRef.current?.querySelectorAll(".cap-row") ?? [];
@@ -65,10 +70,9 @@ export function Capabilities() {
             <span className="mono-label">002</span>
             <span className="mono-label bright">Capabilities</span>
           </div>
-          <h2 className="display max-w-[16ch]" style={{ fontSize: "clamp(40px, 5.5vw, 84px)", lineHeight: 0.96 }}>
-            Four <em>disciplines.</em>
-            <br />
-            One crew. Square corners.
+          <h2 className="display max-w-[18ch]" style={{ fontSize: "clamp(40px, 5.5vw, 84px)", lineHeight: 0.96 }}>
+            Four <em>specialties.</em>
+            <br />One crew. Square corners.
           </h2>
         </div>
 
