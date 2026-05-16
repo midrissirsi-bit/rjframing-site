@@ -255,11 +255,15 @@
   background: #ede5d8;
   color: #1a1f2a;
 }
-.about-light .display { color: #1a1f2a; }
-.about-light .display em { color: #1a6a87; font-style: italic; }
-.about-light .mono-label { color: #6a6357; }
-.about-light .mono-label.bright { color: #1a1f2a; }
-.about-light .about-body { color: #2a3140; }
-.about-light .about-body em { color: #1a6a87 !important; }
-.about-light .about-role { color: #6a6357; }
-.about-light .about-name { color: #1a6a87; }
+.about-light {
+  background: #c7baa3;
+  color: #1f1a14;
+}
+.about-light .display { color: #1f1a14; }
+.about-light .display em { color: #14546b; font-style: italic; }
+.about-light .mono-label { color: #5c5040; }
+.about-light .mono-label.bright { color: #1f1a14; }
+.about-light .about-body { color: #2a241c; }
+.about-light .about-body em { color: #14546b !important; }
+.about-light .about-role { color: #5c5040; }
+.about-light .about-name { color: #14546b; }
