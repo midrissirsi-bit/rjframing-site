@@ -36,11 +36,11 @@ export function Contact() {
               <div className="flex flex-col gap-2">
                 <label className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute" htmlFor="type">Project type</label>
                 <select id="type" name="type" className="border-0 border-b border-line bg-transparent py-3 font-display text-[22px] text-bone outline-none focus:border-bone transition-colors" style={{ fontVariationSettings: '"opsz" 36' }}>
-                  <option>Custom home</option>
-                  <option>Addition</option>
-                  <option>Structural steel</option>
-                  <option>Commercial</option>
-                  <option>Other</option>
+                  <option>Wood framing</option>
+                  <option>Steel framing</option>
+                  <option>Steel beams &amp; columns</option>
+                  <option>Back framing / renovation</option>
+                  <option>Multiple / not sure</option>
                 </select>
               </div>
             </div>
