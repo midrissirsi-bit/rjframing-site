@@ -70,13 +70,13 @@ export function Hero() {
         </h1>
 
         <div className="relative z-[3] mt-10 grid grid-cols-1 items-end gap-7 md:grid-cols-[1.2fr_1fr_1fr] md:gap-10">
-          <p className="font-display max-w-[28ch] text-bone text-[clamp(20px,1.9vw,26px)] font-light leading-[1.25]" style={{ fontVariationSettings: '"opsz" 36' }}>
-            Custom home framing, additions, and structural steel — built right the first time. The kind of builds other crews turn down.
+          <p className="font-display max-w-[32ch] text-bone text-[clamp(20px,1.9vw,26px)] font-light leading-[1.25]" style={{ fontVariationSettings: "'opsz' 36" }}>
+            Wood and steel framing, structural beams, back framing. Built right the first time on the kind of jobs other crews turn down.
           </p>
           <div className="flex flex-col gap-1.5">
             <span className="mono-label">Specializing in</span>
             <span className="font-display text-xl text-bone">
-              Custom Builds <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>·</em> Steel
+              Wood <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>·</em> Steel <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>·</em> Beams
             </span>
           </div>
           <div className="flex flex-wrap gap-3.5">
