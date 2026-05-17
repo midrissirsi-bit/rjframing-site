@@ -31,9 +31,11 @@ export function About() {
               <span className="about-role font-mono text-[11px] tracking-[0.18em] uppercase">Founder &middot; Lead Framer</span>
             </div>
           </div>
-          <div
-            className="aspect-[4/5] w-full rounded border"
-            style={{ background: "#b2a48d", borderColor: "#9c8d75" }}
+          <img
+            src="/images/ray-portrait.png"
+            alt="Ray, founder and lead framer of RJ Framing, on a residential job site in southern Ontario"
+            className="aspect-[4/5] w-full rounded border object-cover"
+            style={{ borderColor: "#9c8d75" }}
           />
         </div>
       </div>
