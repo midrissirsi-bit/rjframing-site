@@ -70,7 +70,7 @@ export function Process() {
                 <img
                   key={s.num}
                   src={s.img}
-                  alt={`Stage ${s.num} — ${s.title} — RJ Framing process`}
+                  alt={`RJ Framing process - stage ${s.num} ${s.title}`}
                   className={`process-img-stage absolute inset-0 h-full w-full object-cover rounded border border-line ${i === 0 ? "active" : ""}`}
                 />
               ))}
