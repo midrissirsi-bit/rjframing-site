@@ -2,9 +2,9 @@
 
 export function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-2 md:px-16 md:py-2.5 text-bone backdrop-blur-md" style={{ background: "rgba(13,18,25,0.6)", borderBottom: "1px solid rgba(35,42,54,0.5)" }}>
+    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-1 md:px-16 md:py-1.5 text-bone backdrop-blur-md" style={{ background: "rgba(13,18,25,0.6)", borderBottom: "1px solid rgba(35,42,54,0.5)" }}>
       <a href="#top" className="flex items-center">
-        <img src="/images/logo.png" alt="RJ Framing" className="h-14 md:h-16 w-auto" style={{ filter: "drop-shadow(0 0 12px rgba(41,197,232,0.5))" }} />
+        <img src="/images/logo.png" alt="RJ Framing" className="h-16 md:h-20 w-auto" style={{ filter: "drop-shadow(0 0 12px rgba(41,197,232,0.55))" }} />
       </a>
       <div className="hidden md:flex items-center gap-8">
         <a href="#work" className="font-mono text-[11px] tracking-[0.18em] uppercase text-bone-dim hover:text-bone transition-colors">Work</a>
