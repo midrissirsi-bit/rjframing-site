@@ -40,8 +40,8 @@ function StatTile(props: StatItem) {
         )}
         {suffix ? (
           <span
-            className="ml-1 align-super"
-            style={{ fontSize: "0.32em", color: "#29c5e8", fontStyle: "italic", fontVariationSettings: '"WONK" 1' }}
+            className="ml-1 align-super font-mono"
+            style={{ fontSize: "0.28em", color: "#29c5e8", letterSpacing: "0.04em" }}
           >
             {suffix}
           </span>
