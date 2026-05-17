@@ -150,6 +150,18 @@ export function ThreeFrame() {
       addPiece(cyl(x, wallTop,  halfD,  x, ridgeY, 0, RAFTER_R, timberMat));
     }
 
+    // Gable end studs - front (z = halfD) and back (z = -halfD) walls.
+    // Vertical studs from the top plate up to the rafter slope line.
+    // Slope: at x=plusminus halfW, height = wallTop (eave); at x=0, height = ridgeY (peak).
+    [-halfD, halfD].forEach((z) => {
+      for (let x = -halfW + STUD; x <= halfW - 0.001; x += STUD) {
+        const slopeHeight = wallTop + (ridgeY - wallTop) * (1 - Math.abs(x) / halfW);
+        if (slopeHeight > wallTop + 0.08) {
+          addPiece(cyl(x, wallTop, z, x, slopeHeight, z, STUD_R, timberMat));
+        }
+      }
+    });
+    
     // Thresholds
     pieces.forEach((p, i) => { p.threshold = i / pieces.length; });
 
