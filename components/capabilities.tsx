@@ -11,28 +11,43 @@ type Cap = {
   num: string;
   title: ReactNode;
   desc: string;
+  image: string;
+  recent: string;
+  recentMeta: string;
 };
 
 const caps: Cap[] = [
   {
     num: "01 / WOOD",
     title: (<><em>Wood</em> Framing</>),
-    desc: "Custom homes, additions, second-storey builds. Stud walls, floor joists, top plates, rafters — full residential framing from foundation to roof. We work from your architect's drawings or rough it out with you on site.",
+    desc: "Custom homes, additions, second-storey builds. Stud walls, floor joists, top plates, rafters - full residential framing from foundation to roof. We work from your architect's drawings or rough it out with you on site.",
+    image: "/images/hero-vaughan.png",
+    recent: "Vaughan custom",
+    recentMeta: "4,800 sqft / 11-day frame",
   },
   {
     num: "02 / STEEL FRAME",
     title: (<><em>Steel</em> Framing</>),
     desc: "Steel-stud framing for commercial buildouts, multi-storey, and fire-rated assemblies. Faster than wood for high partition counts, dead-flat walls every time. Pre-engineered or shop-cut to spec.",
+    image: "/images/hero-barrie.png",
+    recent: "Barrie retail buildout",
+    recentMeta: "4,500 sqft / 3-week turnover",
   },
   {
     num: "03 / STRUCTURE",
     title: (<>Steel Beams <em>&amp; Columns</em></>),
-    desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection. We pull the open-concept jobs that scare other crews — the kind that hold up half a house on one beam.",
+    desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection. We pull the open-concept jobs that scare other crews - the kind that hold up half a house on one beam.",
+    image: "/images/hero-richmond.png",
+    recent: "Richmond Hill moment frame",
+    recentMeta: "W14 beam / HSS columns",
   },
   {
     num: "04 / BACK FRAMING",
     title: (<><em>Back</em> Framing</>),
     desc: "Renovation work and tie-ins. Backing for fixtures, blocking, structural reinforcement on existing builds. The detail framing that makes the next trade's job clean.",
+    image: "/images/hero-aurora.png",
+    recent: "Aurora heritage tie-in",
+    recentMeta: "Rear addition / 3 steel beams",
   },
 ];
 
@@ -83,17 +98,58 @@ export function Capabilities() {
           {caps.map((c) => (
             <article
               key={c.num}
-              className="cap-row reveal-up grid items-center gap-6 border-b border-line py-8 md:grid-cols-[60px_1.6fr_2fr] md:gap-10 md:py-10 group relative overflow-hidden transition-colors"
+              className="cap-row reveal-up group relative grid items-stretch gap-6 border-b border-line py-10 md:grid-cols-[80px_240px_1.4fr_220px] md:gap-8 md:py-14 overflow-hidden transition-colors"
             >
-              <span className="font-mono text-[12px] tracking-[0.18em] text-bone-mute md:col-span-1">
+              {/* Number tag */}
+              <span className="font-mono text-[11px] tracking-[0.18em] text-bone-mute md:pt-2">
                 {c.num}
               </span>
-              <h3 className="display" style={{ fontSize: "clamp(28px, 3.4vw, 48px)", lineHeight: 1 }}>
-                {c.title}
-              </h3>
-              <p className="max-w-[50ch] text-bone-dim leading-relaxed">{c.desc}</p>
+
+              {/* Thumbnail with subtle blueprint corner ticks */}
+              <a href="#work" className="relative block aspect-[4/3] w-full overflow-hidden rounded-sm border border-line bg-bg-elev transition-all duration-500 hover:border-brand/40">
+                <img
+                  src={c.image}
+                  alt={`${c.recent} - RJ Framing`}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.04]"
+                  style={{ filter: "grayscale(0.2) brightness(0.9)" }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <span className="pointer-events-none absolute left-2 top-2 h-2.5 w-2.5 border-l border-t border-brand/70" />
+                <span className="pointer-events-none absolute right-2 top-2 h-2.5 w-2.5 border-r border-t border-brand/70" />
+                <span className="pointer-events-none absolute bottom-2 left-2 h-2.5 w-2.5 border-b border-l border-brand/70" />
+                <span className="pointer-events-none absolute bottom-2 right-2 h-2.5 w-2.5 border-b border-r border-brand/70" />
+              </a>
+
+              {/* Title + description */}
+              <div className="flex flex-col gap-4">
+                <h3 className="display" style={{ fontSize: "clamp(28px, 3.4vw, 48px)", lineHeight: 1 }}>
+                  {c.title}
+                </h3>
+                <p className="max-w-[52ch] text-bone-dim leading-relaxed">{c.desc}</p>
+              </div>
+
+              {/* Recent project tag */}
+              <div className="flex flex-col gap-2 md:justify-end md:pb-2 md:pl-6 md:border-l md:border-line">
+                <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">
+                  Recent
+                </span>
+                <span className="font-display text-xl text-bone leading-tight" style={{ fontVariationSettings: "'opsz' 36" }}>
+                  {c.recent}
+                </span>
+                <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-brand/80">
+                  {c.recentMeta}
+                </span>
+                <a href="#work" className="mt-3 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-bone-dim transition-colors hover:text-brand w-fit">
+                  View the work
+                  <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                    <path d="M5 19 L19 5 M19 5 H8 M19 5 V16" strokeLinecap="square" />
+                  </svg>
+                </a>
+              </div>
+
+              {/* Hover gradient sweep */}
               <div
-                className="absolute bottom-0 left-0 right-0 top-full bg-gradient-to-b from-brand/[0.05] to-transparent transition-all duration-500 group-hover:top-0 pointer-events-none"
+                className="absolute bottom-0 left-0 right-0 top-full bg-gradient-to-b from-brand/[0.04] to-transparent transition-all duration-500 group-hover:top-0 pointer-events-none"
               />
             </article>
           ))}
