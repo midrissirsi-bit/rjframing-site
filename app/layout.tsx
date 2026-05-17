@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "RJ Framing Inc.",
     images: [
       {
-        url: "https://www.rjframing.ca/wp-content/uploads/2025/05/DJI_20250323050347_0143_D-HDR.jpeg",
+        url: "https://www.rjframing.ca/images/og-image.png",
         width: 1200,
         height: 630,
         alt: "Drone view of a custom home framed by RJ Framing in southern Ontario",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "RJ Framing — Rough Carpentry",
     description: "We frame what others can't.",
     images: [
-      "https://www.rjframing.ca/wp-content/uploads/2025/05/DJI_20250323050347_0143_D-HDR.jpeg",
+      "https://www.rjframing.ca/images/og-image.png",
     ],
   },
   other: {
@@ -59,8 +59,8 @@ const schema = {
   "@id": "https://www.rjframing.ca/#business",
   name: "RJ Framing Inc.",
   alternateName: "RJ Framing",
-  image: "https://www.rjframing.ca/wp-content/uploads/2025/05/RJ-Framing-LOGO_4-300x169.jpg",
-  logo: "https://www.rjframing.ca/wp-content/uploads/2025/05/RJ-Framing-LOGO_4-300x169.jpg",
+  image: "https://www.rjframing.ca/images/logo.png",
+  logo: "https://www.rjframing.ca/images/logo.png",
   url: "https://www.rjframing.ca/",
   telephone: "+1-289-688-5951",
   email: "info@rjframing.ca",
