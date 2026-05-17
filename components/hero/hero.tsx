@@ -76,7 +76,7 @@ export function Hero() {
           <div className="flex flex-col gap-1.5">
             <span className="mono-label">Specializing in</span>
             <span className="font-display text-xl text-bone">
-              Wood <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>·</em> Steel <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>·</em> Beams
+              Wood <span style={{ color: "#29c5e8" }}>·</span> Steel <span style={{ color: "#29c5e8" }}>·</span> Beams
             </span>
           </div>
           <div className="flex flex-wrap gap-3.5">
