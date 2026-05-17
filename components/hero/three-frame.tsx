@@ -151,7 +151,7 @@ export function ThreeFrame() {
     }
 
     // Thresholds
-    pieces.forEach((p, i) => { p.threshold = i / pieces.length; });
+    pieces.forEach((p, i) => { p.threshold = (i / pieces.length) * 0.85; });
 
     // Orbit + auto-rotate
     let rotY = -0.7, rotX = 0.45;
