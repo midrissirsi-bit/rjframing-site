@@ -10,6 +10,7 @@ export function Nav() {
           className="h-full w-auto"
           style={{
             mixBlendMode: "screen",
+            filter: "drop-shadow(0 0 6px rgba(41,197,232,0.2))",
           }}
         />
       </a>
