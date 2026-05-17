@@ -1,34 +1,37 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const caps = [
+type Cap = {
+  num: string;
+  title: ReactNode;
+  desc: string;
+};
+
+const caps: Cap[] = [
   {
     num: "01 / WOOD",
-    title: "Wood",
-    em: "Framing",
+    title: (<><em>Wood</em> Framing</>),
     desc: "Custom homes, additions, second-storey builds. Stud walls, floor joists, top plates, rafters — full residential framing from foundation to roof. We work from your architect's drawings or rough it out with you on site.",
   },
   {
     num: "02 / STEEL FRAME",
-    title: "Steel",
-    em: "Framing",
+    title: (<><em>Steel</em> Framing</>),
     desc: "Steel-stud framing for commercial buildouts, multi-storey, and fire-rated assemblies. Faster than wood for high partition counts, dead-flat walls every time. Pre-engineered or shop-cut to spec.",
   },
   {
     num: "03 / STRUCTURE",
-    title: "Steel Beams",
-    em: "& Columns",
+    title: (<>Steel Beams <em>&amp; Columns</em></>),
     desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection. We pull the open-concept jobs that scare other crews — the kind that hold up half a house on one beam.",
   },
   {
     num: "04 / BACK FRAMING",
-    title: "Back",
-    em: "Framing",
+    title: (<><em>Back</em> Framing</>),
     desc: "Renovation work and tie-ins. Backing for fixtures, blocking, structural reinforcement on existing builds. The detail framing that makes the next trade's job clean.",
   },
 ];
@@ -86,7 +89,7 @@ export function Capabilities() {
                 {c.num}
               </span>
               <h3 className="display" style={{ fontSize: "clamp(28px, 3.4vw, 48px)", lineHeight: 1 }}>
-                {c.title} <em>{c.em}</em>
+                {c.title}
               </h3>
               <p className="max-w-[50ch] text-bone-dim leading-relaxed">{c.desc}</p>
               <div
