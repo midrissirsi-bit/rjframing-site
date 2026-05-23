@@ -62,7 +62,7 @@ const schema = {
   logo: "https://www.rjframing.ca/images/logo.png",
   url: "https://www.rjframing.ca/",
   telephone: "+1-289-688-5951",
-  email: "info@rjframing.ca",
+  email: "rjframinginc@gmail.com",
   priceRange: "$$$",
   address: {
     "@type": "PostalAddress",

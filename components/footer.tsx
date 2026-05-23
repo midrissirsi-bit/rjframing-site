@@ -17,7 +17,7 @@ export function Footer() {
           {[
             { href: "https://www.instagram.com/rj.framing/", label: "Instagram" },
             { href: "tel:+12896885951", label: "Call" },
-            { href: "mailto:info@rjframing.ca", label: "Email" },
+            { href: "mailto:rjframinginc@gmail.com", label: "Email" },
           ].map((a) => (
             <a
               key={a.label}
