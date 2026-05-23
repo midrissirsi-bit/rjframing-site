@@ -15,12 +15,11 @@ type StatItem = {
 
 const statItems: StatItem[] = [
   { num: "5", suffix: "+", label: "Years in trade", emphasize: true },
-  { num: "42", label: "Builds completed" },
+  { num: "76", label: "Builds completed" },
   { num: "240", suffix: "k sqft", label: "Sq ft framed" },
   { num: "147", label: "Steel beams set" },
   { num: "100", suffix: "%", label: "Inspection pass", emphasize: true },
   { num: "0", label: "Callbacks last yr", emphasize: true },
-  { num: "11", suffix: " day", label: "Avg frame time" },
   { num: "GTA", suffix: " + Surrounding", label: "Service radius" },
 ];
 

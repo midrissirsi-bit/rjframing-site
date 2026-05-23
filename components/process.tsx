@@ -7,10 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const stages = [
-  { num: "01", title: "Survey",  img: "/images/process-survey.png",  body: "Walk the site. Read the prints. Flag what's about to become a problem on week three. Quote inside a week — broken down by phase, no padding." },
-  { num: "02", title: "Frame",   img: "/images/process-frame.png",   body: "Mobilize the crew. Walls up, floors decked, roof loaded and sheathed. Daily progress photos to your phone. We frame at the pace of a small commercial crew, not a residential one." },
-  { num: "03", title: "Steel",   img: "/images/process-steel.png",   body: "Install structural steel — beams, columns, moment connections. Weld where the engineer calls for it. Sign-offs sent to your GC the day they're inspected." },
-  { num: "04", title: "Handoff", img: "/images/process-handoff.png", body: "Walk-through with your GC. Punch list cleared. Site swept. The next trade walks onto a square, plumb, ready-to-load house. Onto the next." },
+  { num: "01", title: "Contact and estimate",         img: "/images/process-survey.png",  body: "Send the prints, share the scope. We walk the site, flag what is about to become a problem on week three, and come back inside a week with a number broken down by phase. No padding, no boilerplate." },
+  { num: "02", title: "Coordinate with suppliers",    img: "/images/process-steel.png",   body: "Lumber, steel, hardware. Suppliers locked, lead times confirmed, deliveries staged to the crew's schedule. Nothing waits on a truck that should have been ordered last week." },
+  { num: "03", title: "Frame",                        img: "/images/process-frame.png",   body: "Mobilize the crew. Walls up, floors decked, roof loaded and sheathed. Daily progress photos to your phone. We frame at the pace of a small commercial crew, not a residential one." },
+  { num: "04", title: "Handoff",                      img: "/images/process-handoff.png", body: "Walk-through with your GC. Punch list cleared. Site swept. The next trade walks onto a square, plumb, ready-to-load house. Onto the next." },
 ];
 
 export function Process() {

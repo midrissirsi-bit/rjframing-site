@@ -61,7 +61,7 @@ export function WorkGallery() {
       imageItems={projectItems}
       eyebrow="Selected Work"
       title={
-        ("Builds we've raised. Walls we've squared.") as unknown as string
+        ("Project portfolio") as unknown as string
       }
       description="A scroll-and-drag gallery of recent RJ Framing projects across the GTA. Click any tile to expand."
     />

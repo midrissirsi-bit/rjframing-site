@@ -96,7 +96,7 @@ export function Capabilities() {
           <div>
             <h2 className="display max-w-[18ch]" style={{ fontSize: "clamp(40px, 5.5vw, 84px)", lineHeight: 0.96 }}>
               Four <em>specialties.</em>
-              <br />One crew. Square corners.
+              <br />One company. Square corners.
             </h2>
             <p className="mt-4 hidden md:block font-mono text-[10px] tracking-[0.2em] uppercase text-bone-mute">
               Hover a panel to expand

@@ -64,7 +64,7 @@ export function Manifesto() {
             className="font-display max-w-[22ch] text-bone font-light"
             style={{ fontSize: "clamp(24px, 3vw, 44px)", lineHeight: 1.18, letterSpacing: "-0.015em", fontVariationSettings: "'opsz' 96" }}
           >
-            Framing is the <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>bones</em>. If they are off, everything else compensates forever - floors squeak, walls bow, trim never quite sits. We do not compensate. We measure twice, snap clean lines, and frame to spec.
+            Structural work is the <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>bones</em>. If they are off, everything else compensates forever - floors squeak, walls bow, trim never quite sits. We do not compensate. We measure twice, snap clean lines, and frame to spec.
           </p>
         </div>
       </div>
