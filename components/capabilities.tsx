@@ -50,7 +50,7 @@ const caps: Cap[] = [
     titlePost: "",
     desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection. Open-concept work other crews turn down.",
     image: "/images/project-12-steel-beams.jpg",
-    imagePos: "center 75%",
+    imagePos: "center bottom",
     recent: "Richmond Hill",
     recentMeta: "W14 beam / HSS columns",
   },
