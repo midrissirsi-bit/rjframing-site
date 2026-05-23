@@ -14,6 +14,7 @@ type Cap = {
   titlePost: string;        // word after italic, optional
   desc: string;
   image: string;
+  imagePos?: string;
   recent: string;
   recentMeta: string;
 };
@@ -26,7 +27,7 @@ const caps: Cap[] = [
     titleEm: "Wood",
     titlePost: "Framing",
     desc: "Custom homes, additions, second-storey builds. Stud walls, joists, plates, rafters - full residential framing from foundation to roof.",
-    image: "/images/project-02-winter-frame.jpg",
+    image: "/images/project-10-forest.jpg",
     recent: "Vaughan custom",
     recentMeta: "4,800 sqft / 11-day frame",
   },
@@ -49,6 +50,7 @@ const caps: Cap[] = [
     titlePost: "",
     desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection. Open-concept work other crews turn down.",
     image: "/images/project-12-steel-beams.jpg",
+    imagePos: "center 75%",
     recent: "Richmond Hill",
     recentMeta: "W14 beam / HSS columns",
   },
@@ -130,6 +132,7 @@ export function Capabilities() {
                   style={{
                     filter: isActive ? "grayscale(0) brightness(0.85)" : "grayscale(0.4) brightness(0.55)",
                     transform: isActive ? "scale(1.03)" : "scale(1.0)",
+                    objectPosition: c.imagePos ?? "center",
                   }}
                 />
                 {/* Darken gradient */}
@@ -216,7 +219,7 @@ export function Capabilities() {
           {caps.map((c) => (
             <article key={c.num} className="relative overflow-hidden border border-line bg-bg-elev rounded-sm">
               <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <img src={c.image} alt={`${c.recent} - RJ Framing`} className="absolute inset-0 h-full w-full object-cover" style={{ filter: "grayscale(0.2) brightness(0.9)" }} />
+                <img src={c.image} alt={`${c.recent} - RJ Framing`} className="absolute inset-0 h-full w-full object-cover" style={{ filter: "grayscale(0.2) brightness(0.9)", objectPosition: c.imagePos ?? "center" }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                 <div className="absolute bottom-4 left-4">
                   <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-brand">{c.num} / {c.shortLabel}</span>
