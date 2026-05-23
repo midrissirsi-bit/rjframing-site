@@ -29,10 +29,10 @@ export const metadata: Metadata = {
     siteName: "RJ Framing Inc.",
     images: [
       {
-        url: "https://www.rjframing.ca/images/og-image.png",
+        url: "https://www.rjframing.ca/images/project-12-steel-beams.jpg",
         width: 1200,
         height: 630,
-        alt: "Drone view of a custom home framed by RJ Framing in southern Ontario",
+        alt: "Steel structural beams installed on a custom home framed by RJ Framing in the Greater Toronto Area",
       },
     ],
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "RJ Framing — Rough Carpentry",
     description: "We frame what others can't.",
     images: [
-      "https://www.rjframing.ca/images/og-image.png",
+      "https://www.rjframing.ca/images/project-12-steel-beams.jpg",
     ],
   },
   other: {
