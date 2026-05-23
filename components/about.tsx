@@ -28,12 +28,12 @@ export function About() {
             <p className="mt-4">If you are building something that scares your other framers, that is the call we want.</p>
             <div className="mt-8 flex items-center gap-5">
               <span className="about-name font-display italic text-3xl" style={{ fontVariationSettings: "'WONK' 1" }}>Ray</span>
-              <span className="about-role font-mono text-[11px] tracking-[0.18em] uppercase">Founder &middot; Lead Framer</span>
+              <span className="about-role font-mono text-[11px] tracking-[0.18em] uppercase">Founder &middot; Journeyman Carpenter</span>
             </div>
           </div>
           <img
             src="/images/ray-portrait.png"
-            alt="Ray, founder and lead framer of RJ Framing, on a residential job site in southern Ontario"
+            alt="Ray, founder and journeyman carpenter of RJ Framing, on a residential job site in southern Ontario"
             className="aspect-[4/5] w-full rounded border object-cover"
             style={{ borderColor: "#9c8d75" }}
           />
