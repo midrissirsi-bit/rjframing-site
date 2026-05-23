@@ -51,11 +51,11 @@ export function Contact() {
                 <div className="flex flex-col gap-2">
                   <label className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute" htmlFor="type">Project type</label>
                   <select id="type" name="type" className="border-0 border-b border-line bg-transparent py-3 font-display text-[22px] text-bone outline-none focus:border-brand transition-colors" style={{ fontVariationSettings: "'opsz' 36" }}>
-                    <option>Wood framing</option>
-                    <option>Steel framing</option>
-                    <option>Steel beams &amp; columns</option>
-                    <option>Back framing / renovation</option>
-                    <option>Multiple / not sure</option>
+                    <option style={{ background: "#14181f", color: "#e8ecf0" }}>Wood framing</option>
+                    <option style={{ background: "#14181f", color: "#e8ecf0" }}>Steel framing</option>
+                    <option style={{ background: "#14181f", color: "#e8ecf0" }}>Steel beams &amp; columns</option>
+                    <option style={{ background: "#14181f", color: "#e8ecf0" }}>Back framing / renovation</option>
+                    <option style={{ background: "#14181f", color: "#e8ecf0" }}>Multiple / not sure</option>
                   </select>
                 </div>
               </div>

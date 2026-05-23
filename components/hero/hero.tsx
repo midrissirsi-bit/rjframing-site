@@ -65,8 +65,7 @@ export function Hero() {
           style={{ fontSize: "clamp(56px, 11.5vw, 184px)" }}
         >
           <span className="line"><span className="word">We</span> <span className="word">frame</span></span>
-          <span className="line"><span className="word">what</span> <span className="word"><em>others</em></span></span>
-          <span className="line"><span className="word">can&apos;t.</span></span>
+          <span className="line"><span className="word">the</span> <span className="word"><em>future.</em></span></span>
         </h1>
 
         <div className="relative z-[3] mt-10 grid grid-cols-1 items-end gap-7 md:grid-cols-[1.2fr_1fr_1fr] md:gap-10">

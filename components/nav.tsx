@@ -15,7 +15,7 @@ export function Nav() {
         />
       </a>
       <div className="hidden md:flex items-center gap-8">
-        <a href="#work" className="font-mono text-[11px] tracking-[0.18em] uppercase text-bone-dim hover:text-bone transition-colors">Work</a>
+        <a href="#work" className="font-mono text-[11px] tracking-[0.18em] uppercase text-bone-dim hover:text-bone transition-colors">Portfolio</a>
         <a href="#services" className="font-mono text-[11px] tracking-[0.18em] uppercase text-bone-dim hover:text-bone transition-colors">Services</a>
         <a href="#process" className="font-mono text-[11px] tracking-[0.18em] uppercase text-bone-dim hover:text-bone transition-colors">Process</a>
         <a href="#about" className="font-mono text-[11px] tracking-[0.18em] uppercase text-bone-dim hover:text-bone transition-colors">About</a>

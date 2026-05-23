@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RJ Framing — Rough Carpentry",
     description:
-      "We frame what others can't. Custom homes, additions, structural steel. GTA & surrounding areas.",
+      "We frame the future. Custom homes, additions, structural steel. GTA & surrounding areas.",
     type: "website",
     locale: "en_CA",
     url: "https://www.rjframing.ca/",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "RJ Framing — Rough Carpentry",
-    description: "We frame what others can't.",
+    description: "We frame the future.",
     images: [
       "https://www.rjframing.ca/images/project-12-steel-beams.jpg",
     ],

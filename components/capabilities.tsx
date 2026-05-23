@@ -130,13 +130,13 @@ export function Capabilities() {
                   alt={`${c.recent} - RJ Framing`}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out"
                   style={{
-                    filter: isActive ? "grayscale(0) brightness(0.85)" : "grayscale(0.4) brightness(0.55)",
+                    filter: isActive ? "grayscale(0) brightness(1.05)" : "grayscale(0.4) brightness(0.5)",
                     transform: isActive ? "scale(1.03)" : "scale(1.0)",
                     objectPosition: c.imagePos ?? "center",
                   }}
                 />
                 {/* Darken gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20 pointer-events-none transition-opacity duration-700" style={{ opacity: isActive ? 0.55 : 1 }} />
                 {/* Side cyan rail when active */}
                 <div
                   className="absolute left-0 top-0 bottom-0 w-px transition-all duration-700"
