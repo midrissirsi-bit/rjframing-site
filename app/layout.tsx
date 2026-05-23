@@ -5,7 +5,7 @@ import { LenisProvider } from "@/components/lenis-provider";
 export const metadata: Metadata = {
   title: "RJ Framing — Rough Carpentry. Custom home framing & steel in the GTA.",
   description:
-    "Custom home framing, additions, and structural steel installation across the Greater Toronto Area and Barrie. We take the framing other crews turn down — cantilevers, high-load steel, tight infill lots. 5+ years, 100% inspection pass.",
+    "Custom home framing, additions, and structural steel installation across the Greater Toronto Area and surrounding areas. We take the framing other crews turn down — cantilevers, high-load steel, tight infill lots. 5+ years, 100% inspection pass.",
   metadataBase: new URL("https://www.rjframing.ca"),
   alternates: {
     canonical: "https://www.rjframing.ca/",
@@ -16,14 +16,13 @@ export const metadata: Metadata = {
     "custom home framing Toronto",
     "structural steel installation Ontario",
     "home addition framing Vaughan",
-    "rough carpentry Barrie",
     "residential framer Aurora",
     "Richmond Hill framing crew",
   ],
   openGraph: {
     title: "RJ Framing — Rough Carpentry",
     description:
-      "We frame what others can't. Custom homes, additions, structural steel. GTA & Barrie.",
+      "We frame what others can't. Custom homes, additions, structural steel. GTA & surrounding areas.",
     type: "website",
     locale: "en_CA",
     url: "https://www.rjframing.ca/",
@@ -81,7 +80,6 @@ const schema = {
     { "@type": "City", name: "Vaughan" },
     { "@type": "City", name: "Aurora" },
     { "@type": "City", name: "Richmond Hill" },
-    { "@type": "City", name: "Barrie" },
     { "@type": "AdministrativeArea", name: "Greater Toronto Area" },
   ],
   openingHoursSpecification: [

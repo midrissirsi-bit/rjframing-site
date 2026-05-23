@@ -23,7 +23,7 @@ export function About() {
               Ray started RJ Framing because he was tired of finishing other crews&apos; shortcuts &mdash; the studs that drifted a quarter inch off layout, the headers under-spec&apos;d by a single jack, the steel installs that came back open at inspection.
             </p>
             <p className="mt-4">
-              Five years and dozens of custom builds later, he runs a small, sharp team that takes on the framing nobody else wants &mdash; the cantilevers, the high-load steel, the tight infill lots in Vaughan, Aurora, and Barrie where there is no room for mistakes.
+              Five years and dozens of custom builds later, he runs a small, sharp team that takes on the framing nobody else wants &mdash; the cantilevers, the high-load steel, the tight infill lots in Vaughan and Aurora where there is no room for mistakes.
             </p>
             <p className="mt-4">If you are building something that scares your other framers, that is the call we want.</p>
             <div className="mt-8 flex items-center gap-5">

@@ -77,7 +77,7 @@ export function Contact() {
           <aside className="flex flex-col gap-9 border-t border-line pt-5">
             <Info label="Call direct" href="tel:+12896885951">+1 (289) 688&middot;5951</Info>
             <Info label="Email" href="mailto:info@rjframing.ca">info@rjframing.ca</Info>
-            <Info label="Service area">GTA &middot; Barrie<br />&amp; surrounding</Info>
+            <Info label="Service area">GTA &amp; surrounding<br />areas</Info>
             <div className="flex flex-col gap-1.5">
               <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Hours</span>
               <span className="font-display text-lg text-bone leading-relaxed">

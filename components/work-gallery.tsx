@@ -32,8 +32,8 @@ const projectItems: ImageItem[] = [
   {
     id: "rj-2024-009",
     title: "Retail Buildout",
-    desc: "Barrie · 4,500 sqft commercial · 3-week turnover",
-    url: "/images/hero-barrie.png",
+    desc: "4,500 sqft commercial · 3-week turnover",
+    url: "/images/hero-commercial.png",
     span: "md:row-span-1",
     meta: { left: "2024 · COMMERCIAL", right: "3-WEEK" },
   },

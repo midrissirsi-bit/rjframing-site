@@ -21,7 +21,7 @@ const statItems: StatItem[] = [
   { num: "100", suffix: "%", label: "Inspection pass", emphasize: true },
   { num: "0", label: "Callbacks last yr", emphasize: true },
   { num: "11", suffix: " day", label: "Avg frame time" },
-  { num: "GTA", suffix: " + Barrie", label: "Service radius" },
+  { num: "GTA", suffix: " + Surrounding", label: "Service radius" },
 ];
 
 function StatTile(props: StatItem) {

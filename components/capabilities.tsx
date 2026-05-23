@@ -37,8 +37,8 @@ const caps: Cap[] = [
     titleEm: "Steel",
     titlePost: "Framing",
     desc: "Steel-stud framing for commercial buildouts, multi-storey, and fire-rated assemblies. Faster than wood for high partition counts, dead-flat walls.",
-    image: "/images/hero-barrie.png",
-    recent: "Barrie retail",
+    image: "/images/hero-commercial.png",
+    recent: "Commercial retail",
     recentMeta: "4,500 sqft / 3-week turnover",
   },
   {

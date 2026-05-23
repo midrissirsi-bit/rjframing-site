@@ -30,7 +30,7 @@ export function Loader() {
           <div className="absolute bg-brand animate-load" style={{ inset: "0 100% 0 0" }} />
         </div>
         <div className="mt-3.5 font-mono text-[11px] tracking-[0.16em] uppercase text-bone-mute">
-          Rough Carpentry — GTA · Barrie
+          Rough Carpentry — GTA &amp; surrounding areas
         </div>
       </div>
     </div>
