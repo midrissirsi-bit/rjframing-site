@@ -32,7 +32,7 @@ export function About() {
             </div>
           </div>
           <img
-            src="/images/ray-portrait.png"
+            src="/images/ray-portrait.jpg"
             alt="Ray, founder and journeyman carpenter of RJ Framing, on a residential job site in southern Ontario"
             className="aspect-[4/5] w-full rounded border object-cover"
             style={{ borderColor: "#9c8d75" }}
