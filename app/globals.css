@@ -112,6 +112,36 @@
 .rotate-hint .ring { width: 18px; height: 18px; border: 1px solid #7d8595; border-radius: 50%; position: relative; }
 .rotate-hint .ring::after { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #29c5e8; border-radius: 50%; box-shadow: 0 0 6px #29c5e8; animation: orbit 4s linear infinite; transform-origin: 2px 11px; }
 @media (max-width: 767px) { .rotate-hint { display: none !important; } }
+
+/* === Project portfolio bento marquee === */
+@keyframes bento-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.bento-marquee-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 180px);
+  grid-auto-columns: 260px;
+  gap: 12px;
+  width: max-content;
+  animation: bento-marquee-scroll 80s linear infinite;
+  will-change: transform;
+}
+.bento-marquee-wrap:hover .bento-marquee-track {
+  animation-play-state: paused;
+}
+@media (min-width: 768px) {
+  .bento-marquee-track {
+    grid-template-rows: repeat(2, 280px);
+    grid-auto-columns: 380px;
+    gap: 16px;
+    animation-duration: 110s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bento-marquee-track { animation: none; }
+}
 @keyframes orbit { to { transform: rotate(360deg) translateX(-50%); } }
 
 .hero-headline .char { display: inline-block; will-change: transform; }
