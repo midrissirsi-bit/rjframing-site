@@ -14,7 +14,7 @@ import { X } from "lucide-react";
 export type ImageItem = {
   id: number | string;
   title: string;
-  desc: string;
+  desc?: string;
   url: string;
   span: string; // Tailwind CSS grid span classes (e.g., "md:col-span-2")
   meta?: { left?: string; right?: string };
@@ -80,7 +80,7 @@ const ImageModal = ({
         <div className="mt-4 flex items-end justify-between">
           <div>
             <h3 className="font-display text-2xl text-bone">{item.title}</h3>
-            <p className="mt-1 text-sm text-bone-dim">{item.desc}</p>
+            {item.desc && <p className="mt-1 text-sm text-bone-dim">{item.desc}</p>}
           </div>
           {item.meta && (
             <div className="text-right">
@@ -214,7 +214,7 @@ const InteractiveImageBentoGallery: React.FC<
                 <div className="relative z-10 flex w-full items-end justify-between gap-3">
                   <div className="translate-y-2 opacity-90 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                     <h3 className="font-display text-xl text-bone">{item.title}</h3>
-                    <p className="mt-1 text-sm text-bone-dim">{item.desc}</p>
+                    {item.desc && <p className="mt-1 text-sm text-bone-dim">{item.desc}</p>}
                   </div>
                   {item.meta && (
                     <div className="text-right opacity-0 transition-opacity duration-500 group-hover:opacity-100">

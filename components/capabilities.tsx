@@ -16,7 +16,6 @@ type Cap = {
   image: string;
   imagePos?: string;
   recent: string;
-  recentMeta: string;
 };
 
 const caps: Cap[] = [
@@ -28,8 +27,7 @@ const caps: Cap[] = [
     titlePost: "Framing",
     desc: "Custom homes, additions, renovations. From foundation to roof.",
     image: "/images/project-10-forest.jpg",
-    recent: "Vaughan custom",
-    recentMeta: "4,800 sqft / 11-day frame",
+    recent: "Hoggs Hollow, Toronto",
   },
   {
     num: "02",
@@ -39,8 +37,7 @@ const caps: Cap[] = [
     titlePost: "Framing",
     desc: "Steel-stud framing for commercial buildouts, multiplexes, and fire-rated assemblies.",
     image: "/images/project-06-wood-steel.jpg",
-    recent: "Commercial retail",
-    recentMeta: "4,500 sqft / 3-week turnover",
+    recent: "Project Norcross",
   },
   {
     num: "03",
@@ -51,8 +48,7 @@ const caps: Cap[] = [
     desc: "W-flange beams, HSS columns, moment frames. Installed to engineering spec, signed off, ready for inspection.",
     image: "/images/project-12-steel-beams.jpg",
     imagePos: "center bottom",
-    recent: "Richmond Hill",
-    recentMeta: "W14 beam / HSS columns",
+    recent: "Project Glengrove",
   },
   {
     num: "04",
@@ -62,8 +58,7 @@ const caps: Cap[] = [
     titlePost: "Framing",
     desc: "Bulkheads around mechanical services and specialty ceiling details.",
     image: "/images/project-05-interior-joists.jpg",
-    recent: "Aurora heritage",
-    recentMeta: "Rear addition / 3 steel beams",
+    recent: "Project Lakeshore",
   },
 ];
 
@@ -185,9 +180,6 @@ export function Capabilities() {
                       <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Recent</span>
                       <div className="font-display text-xl text-bone leading-tight mt-1" style={{ fontVariationSettings: "'opsz' 36" }}>
                         {c.recent}
-                      </div>
-                      <div className="font-mono text-[10px] tracking-[0.16em] uppercase text-brand/80 mt-0.5">
-                        {c.recentMeta}
                       </div>
                     </div>
                   </div>
