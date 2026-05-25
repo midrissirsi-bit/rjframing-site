@@ -111,6 +111,7 @@
 .rotate-hint.show { opacity: 1; }
 .rotate-hint .ring { width: 18px; height: 18px; border: 1px solid #7d8595; border-radius: 50%; position: relative; }
 .rotate-hint .ring::after { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #29c5e8; border-radius: 50%; box-shadow: 0 0 6px #29c5e8; animation: orbit 4s linear infinite; transform-origin: 2px 11px; }
+@media (max-width: 767px) { .rotate-hint { display: none !important; } }
 @keyframes orbit { to { transform: rotate(360deg) translateX(-50%); } }
 
 .hero-headline .char { display: inline-block; will-change: transform; }

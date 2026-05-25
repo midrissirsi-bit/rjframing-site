@@ -44,7 +44,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="hero relative min-h-[220vh]" id="top">
+    <section className="hero relative min-h-[140vh] md:min-h-[220vh]" id="top">
       <div className="hero-stage">
         <div className="absolute inset-0 hero-bg-grad">
           <ThreeFrame />
@@ -94,7 +94,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="absolute bottom-7 left-1/2 z-[3] -translate-x-1/2 text-bone-mute flex flex-col items-center gap-2.5">
+        <div className="absolute bottom-7 left-1/2 z-[3] -translate-x-1/2 text-bone-mute hidden md:flex flex-col items-center gap-2.5">
           <span className="mono-label">SCROLL TO BUILD</span>
           <span className="h-12 w-px bg-gradient-to-b from-bone-mute to-transparent animate-cue" />
         </div>
