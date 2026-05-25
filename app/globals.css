@@ -136,7 +136,7 @@
     grid-template-rows: repeat(2, 280px);
     grid-auto-columns: 380px;
     gap: 16px;
-    animation-duration: 60s;
+    animation-duration: 50s;
   }
 }
 @media (prefers-reduced-motion: reduce) {
