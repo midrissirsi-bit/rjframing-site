@@ -3,7 +3,29 @@
 import { useState } from "react";
 
 export function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    try {
+      const res = await fetch("https://formspree.io/f/maqkddnk", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <section id="contact" className="bg-bg px-6 py-24 md:px-16 md:py-32">
@@ -40,7 +62,9 @@ export function Contact() {
 
             <form
               className="flex flex-col gap-7"
-              onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+              action="https://formspree.io/f/maqkddnk"
+              method="POST"
+              onSubmit={handleSubmit}
             >
               <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
                 <Field label="Name" id="name" type="text" placeholder="Your name" required />
@@ -64,13 +88,16 @@ export function Contact() {
                 <label className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute" htmlFor="msg">Tell us about your project</label>
                 <textarea id="msg" name="msg" placeholder="Size, timeline, drawings, anything you want us to know" className="min-h-[100px] resize-y border-0 border-b border-line bg-transparent py-3 font-sans text-[17px] text-bone outline-none focus:border-brand transition-colors" />
               </div>
-              <button type="submit" className="mt-3 inline-flex items-center gap-3.5 self-start rounded-full bg-brand px-9 py-5 font-mono text-[12px] tracking-[0.2em] uppercase text-bg transition-all duration-300 hover:bg-bone" style={{ boxShadow: "0 0 30px -8px rgba(41,197,232,0.5)" }}>
-                Submit quote request
+              <button type="submit" disabled={status === "submitting"} className="mt-3 inline-flex items-center gap-3.5 self-start rounded-full bg-brand px-9 py-5 font-mono text-[12px] tracking-[0.2em] uppercase text-bg transition-all duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed" style={{ boxShadow: "0 0 30px -8px rgba(41,197,232,0.5)" }}>
+                {status === "submitting" ? "Sending..." : "Submit quote request"}
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                   <path d="M5 19 L19 5 M19 5 H8 M19 5 V16" strokeLinecap="square"/>
                 </svg>
               </button>
-              <div className="min-h-[14px] font-mono text-[11px] text-brand">{submitted ? "Thanks - we will be in touch within 24 hours." : ""}</div>
+              <div className="min-h-[14px] font-mono text-[11px]" style={{ color: status === "error" ? "#ff6b6b" : "#29c5e8" }}>
+                {status === "success" && "Thanks - we will be in touch within 24 hours."}
+                {status === "error" && "Something went wrong. Please email rjframinginc@gmail.com or call (289) 688-5951."}
+              </div>
             </form>
           </div>
 
