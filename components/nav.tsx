@@ -43,7 +43,7 @@ export function Nav() {
           <img
             src="/images/logo.png"
             alt="RJ Framing"
-            className="h-10 md:h-full w-auto"
+            className="h-full w-auto"
             style={{
               mixBlendMode: "screen",
               filter: "drop-shadow(0 0 6px rgba(41,197,232,0.2))",
