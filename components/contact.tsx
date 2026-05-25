@@ -36,12 +36,6 @@ export function Contact() {
             Tell us what <em>you are</em>
             <br />building.
           </h2>
-          <p
-            className="mt-7 max-w-[38ch] font-display text-bone-dim font-light"
-            style={{ fontSize: "clamp(20px, 1.9vw, 26px)", lineHeight: 1.3, fontVariationSettings: "'opsz' 36" }}
-          >
-            Walk the site, read the prints, send a number inside a week. No padding, no boilerplate - just what the frame will cost and how long it will take.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr] md:gap-12">

@@ -70,7 +70,7 @@ export function Hero() {
 
         <div className="relative z-[3] mt-10 grid grid-cols-1 items-end gap-7 md:grid-cols-[1.2fr_1fr_1fr] md:gap-10">
           <p className="font-display max-w-[32ch] text-bone text-[clamp(20px,1.9vw,26px)] font-light leading-[1.25]" style={{ fontVariationSettings: "'opsz' 36" }}>
-            Custom homes, additions, renovations, commercial builds, multiplexes. Built right the first time on the kind of jobs other crews turn down.
+            Custom homes, additions, renovations, commercial builds, multiplexes. Built right the first time.
           </p>
           <div className="flex flex-col gap-1.5">
             <span className="mono-label">Specializing in</span>
