@@ -317,3 +317,37 @@
 .about-light .about-body em { color: #14546b !important; }
 .about-light .about-role { color: #5c5040; }
 .about-light .about-name { color: #14546b; }
+
+/* ───────────────────────────────────────────────────────────────
+   MOBILE — Process section. On desktop it is a 400vh pinned
+   scroll-jack with an image stack. On mobile that left the right
+   half empty for ~4 screen-heights (dead space). Here we un-pin it
+   and let the four stages flow normally, top to bottom.
+   ─────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .process-track { height: auto; }
+  .process-stage {
+    position: static;
+    height: auto;
+    display: block;
+    padding: 64px clamp(20px, 6vw, 36px);
+  }
+  .process-stages { display: block; }
+  .process-stage-item {
+    grid-column: auto;
+    grid-row: auto;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    padding-bottom: 48px;
+    margin-bottom: 48px;
+    border-bottom: 1px solid #232a36;
+  }
+  .process-stage-item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+  /* the "003 / Process" tag only needs to appear once when stacked */
+  .process-stage-item:not(:first-child) > .mono-label { display: none; }
+}

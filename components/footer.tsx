@@ -22,7 +22,7 @@ export function Footer() {
             <a
               key={a.label}
               href={a.href}
-              className="w-fit font-mono text-[11px] tracking-[0.16em] uppercase text-bone-dim transition-colors hover:text-bone"
+              className="w-fit py-2 font-mono text-[11px] tracking-[0.16em] uppercase text-bone-dim transition-colors hover:text-bone"
             >
               ↗ {a.label}
             </a>

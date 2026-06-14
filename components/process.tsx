@@ -55,6 +55,12 @@ export function Process() {
                     {s.title}
                   </h3>
                   <p className="max-w-[38ch] text-[17px] leading-relaxed text-bone-dim">{s.body}</p>
+                  <img
+                    src={s.img}
+                    alt={`RJ Framing process - stage ${s.num} ${s.title}`}
+                    className="mt-8 block aspect-[4/3] w-full rounded border border-line object-cover md:hidden"
+                    style={{ objectPosition: (s as { imgPos?: string }).imgPos ?? "center", filter: "grayscale(0.15) contrast(1.05) brightness(0.92)" }}
+                  />
                   <div className="mt-10 flex items-center gap-4">
                     <span className="mono-label">{s.num} / 04</span>
                     <div className="relative h-px flex-1 overflow-hidden bg-line">

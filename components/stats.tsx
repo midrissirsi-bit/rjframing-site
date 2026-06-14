@@ -96,7 +96,7 @@ export function Stats() {
               Five years <em>in the trade.</em>
               <br />Here is the proof.
             </h2>
-            <p className="mt-4 font-mono text-[10px] tracking-[0.18em] uppercase text-bone-mute">
+            <p className="mt-4 hidden md:block font-mono text-[10px] tracking-[0.18em] uppercase text-bone-mute">
               HOVER TO PAUSE
             </p>
           </div>

@@ -229,7 +229,7 @@ export function Capabilities() {
                     <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Recent</span>
                     <div className="font-display text-base text-bone mt-1">{c.recent}</div>
                   </div>
-                  <a href="#work" className="font-mono text-[10px] tracking-[0.2em] uppercase text-brand">View work &rarr;</a>
+                  <a href="#work" className="-my-1 inline-block py-2 font-mono text-[10px] tracking-[0.2em] uppercase text-brand">View work &rarr;</a>
                 </div>
               </div>
             </article>
