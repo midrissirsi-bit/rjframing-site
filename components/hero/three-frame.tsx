@@ -216,7 +216,9 @@ export function ThreeFrame() {
     function easeOutCubic(t: number) { return 1 - Math.pow(1 - t, 3); }
 
     let rafId = 0;
+    let visible = true;
     function frame() {
+      if (!visible) { rafId = 0; return; }
       rafId = requestAnimationFrame(frame);
 
       pieces.forEach((p) => {
@@ -254,8 +256,20 @@ export function ThreeFrame() {
     }
     frame();
 
+    // Pause the render loop while the hero is scrolled out of view — no point
+    // re-rendering ~150 meshes at 60fps when the user is reading the footer.
+    const visObserver = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !rafId) frame();
+      },
+      { threshold: 0 },
+    );
+    visObserver.observe(canvas);
+
     return () => {
       cancelAnimationFrame(rafId);
+      visObserver.disconnect();
       window.clearTimeout(hintTimer);
       trigger.kill();
       canvas.removeEventListener("pointerdown", onDown);

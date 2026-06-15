@@ -7,11 +7,21 @@ const links = [
   { href: "#services", label: "Services" },
   { href: "#process", label: "Process" },
   { href: "#about", label: "About" },
+  { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" },
 ];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Condense the bar once the user starts scrolling
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Lock background scroll while the mobile menu is open
   useEffect(() => {
@@ -37,8 +47,8 @@ export function Nav() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-16 md:h-24 text-bone backdrop-blur-md"
-        style={{ background: "rgba(13,18,25,0.6)", borderBottom: "1px solid rgba(35,42,54,0.5)" }}
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 text-bone backdrop-blur-md transition-[height,background-color] duration-300 ${scrolled ? "h-14 md:h-20" : "h-16 md:h-24"}`}
+        style={{ background: scrolled ? "rgba(10,13,18,0.9)" : "rgba(13,18,25,0.6)", borderBottom: "1px solid rgba(35,42,54,0.5)" }}
       >
         <a href="#top" className="flex items-center h-full" onClick={() => setOpen(false)}>
           <img
@@ -103,13 +113,18 @@ export function Nav() {
           onClick={(e) => e.stopPropagation()}
         >
           <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Menu</span>
-          {links.map((l) => (
+          {links.map((l, i) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
               className="display text-bone leading-[1]"
-              style={{ fontSize: "clamp(40px, 11vw, 60px)" }}
+              style={{
+                fontSize: "clamp(40px, 11vw, 60px)",
+                opacity: open ? 1 : 0,
+                transform: open ? "translateY(0)" : "translateY(18px)",
+                transition: `opacity 0.5s ease ${0.12 + i * 0.06}s, transform 0.55s cubic-bezier(.22,.61,.36,1) ${0.12 + i * 0.06}s`,
+              }}
             >
               {l.label}
             </a>

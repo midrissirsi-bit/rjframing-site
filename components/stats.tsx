@@ -77,7 +77,7 @@ export function Stats() {
   }, []);
 
   return (
-    <section className="border-y border-line bg-bg py-24 md:py-32">
+    <section className="border-y border-line bg-bg py-16 md:py-32">
       <style>{`
         @keyframes marquee-stats {
           from { transform: translateX(0); }

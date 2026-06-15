@@ -30,7 +30,7 @@ export function Contact() {
   return (
     <section id="contact" className="bg-bg px-6 py-24 md:px-16 md:py-32">
       <div className="mx-auto max-w-[1480px]">
-        <div className="mb-16">
+        <div className="mb-16" data-reveal>
           <span className="mono-label">006 / Get a quote</span>
           <h2 className="display mt-5 max-w-[14ch]" style={{ fontSize: "clamp(56px, 11vw, 180px)", lineHeight: 0.92 }}>
             Tell us what <em>you are</em>
@@ -41,6 +41,7 @@ export function Contact() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr] md:gap-12">
           {/* Form card - lifted out of the dark with subtle bg + cyan glow */}
           <div
+            data-reveal
             className="relative rounded-sm p-8 md:p-12"
             style={{
               background: "linear-gradient(165deg, rgba(28,35,48,0.85) 0%, rgba(20,24,31,0.65) 100%)",
@@ -95,7 +96,7 @@ export function Contact() {
             </form>
           </div>
 
-          <aside className="flex flex-col gap-9 border-t border-line pt-5">
+          <aside data-reveal style={{ ["--reveal-delay" as string]: "0.12s" }} className="flex flex-col gap-9 border-t border-line pt-5">
             <Info label="Call direct" href="tel:+12896885951">+1 (289) 688&middot;5951</Info>
             <Info label="Email" href="mailto:rjframinginc@gmail.com">rjframinginc@gmail.com</Info>
             <Info label="Service area">GTA &amp; surrounding<br />areas</Info>

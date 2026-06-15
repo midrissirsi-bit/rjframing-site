@@ -52,7 +52,7 @@ export function Manifesto() {
   }, []);
 
   return (
-    <section className="px-6 py-24 md:px-16 md:py-32">
+    <section className="px-6 py-16 md:px-16 md:py-32">
       <div className="mx-auto max-w-[1480px]">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-[200px_1fr] md:gap-16">
           <div className="flex flex-col gap-2.5 pt-4">

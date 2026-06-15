@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LenisProvider } from "@/components/lenis-provider";
+import { ScrollFX } from "@/components/scroll-fx";
 
 export const metadata: Metadata = {
   title: "RJ Framing — Rough Carpentry. Custom home framing & steel in the GTA.",
   description:
-    "Custom home framing, additions, and structural steel installation across the Greater Toronto Area and surrounding areas. We take the framing other crews turn down — cantilevers, high-load steel, tight infill lots. 5+ years, 100% inspection pass.",
+    "Custom home framing, additions, and structural steel across the Greater Toronto Area. The framing other crews turn down, built to spec. 5+ years, 100% inspection pass.",
   metadataBase: new URL("https://www.rjframing.ca"),
   alternates: {
     canonical: "https://www.rjframing.ca/",
@@ -142,9 +143,25 @@ const schema = {
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "5.0",
-    reviewCount: "12",
+    reviewCount: "2",
     bestRating: "5",
   },
+  review: [
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Parm Dhanoa" },
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      reviewBody:
+        "Ray and his team did some structural modifications at our truck shop. We were very pleased with his professionalism and end product — he coordinated with the structural engineer to save us money where he could.",
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Robby Wexler" },
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      reviewBody:
+        "Ray is a great framer and his team work hard to stay on track and on budget. Highly recommend.",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -161,6 +178,8 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <div className="grain" aria-hidden="true" />
+        <ScrollFX />
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>

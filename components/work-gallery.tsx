@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type ProjectItem = {
   id: string;
@@ -75,11 +76,12 @@ export function WorkGallery() {
               aria-label={`Enlarge ${item.title}`}
               className={`bento-cell relative overflow-hidden rounded-sm border border-line group cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-brand ${item.span}`}
             >
-              <img
+              <Image
                 src={item.url}
-                alt={`${item.title} - ${item.desc} - RJ Framing project`}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                loading="lazy"
+                alt={`${item.title} — ${item.desc} — RJ Framing custom framing project, Greater Toronto Area`}
+                fill
+                sizes="(max-width: 768px) 280px, 400px"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
 

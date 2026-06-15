@@ -318,6 +318,50 @@
 .about-light .about-role { color: #5c5040; }
 .about-light .about-name { color: #14546b; }
 
+/* FAQ — controlled accordion with smooth grid-rows expand */
+.faq-item { border-top: 1px solid #232a36; }
+.faq-item:last-child { border-bottom: 1px solid #232a36; }
+.faq-item button { cursor: pointer; outline: none; }
+.faq-icon { transition: transform 0.4s cubic-bezier(.22, .61, .36, 1), border-color 0.3s ease; }
+.faq-icon[data-open="true"] { transform: rotate(45deg); }
+.faq-item button:hover .faq-icon { border-color: #29c5e8; }
+.faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.45s cubic-bezier(.22, .61, .36, 1), opacity 0.4s ease;
+}
+.faq-body[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.faq-body-inner { overflow: hidden; }
+
+/* Capabilities mobile accordion — smooth grid-rows expand */
+.cap-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.65s cubic-bezier(.4, 0, .2, 1), opacity 0.5s ease;
+}
+.cap-body[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.cap-body-inner { overflow: hidden; }
+
+/* Testimonials — stars pop in with a stagger when the card reveals */
+@keyframes star-pop {
+  from { opacity: 0; transform: scale(0.2) rotate(-25deg); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] .rev-star { opacity: 0; }
+  [data-reveal][data-shown] .rev-star {
+    animation: star-pop 0.5s cubic-bezier(.34, 1.56, .64, 1) forwards;
+  }
+}
+
 /* ───────────────────────────────────────────────────────────────
    MOBILE — Process section. On desktop it is a 400vh pinned
    scroll-jack with an image stack. On mobile that left the right
@@ -333,15 +377,25 @@
     padding: 64px clamp(20px, 6vw, 36px);
   }
   .process-stages { display: block; }
-  .process-stage-item {
+  .process-stage-item,
+  .process-stage-item.active {
     grid-column: auto;
     grid-row: auto;
-    opacity: 1;
     transform: none;
     pointer-events: auto;
+    opacity: 0.42;
     padding-bottom: 48px;
     margin-bottom: 48px;
     border-bottom: 1px solid #232a36;
+    transition: opacity 0.6s ease;
+  }
+  .process-stage-item.mob-focus { opacity: 1; }
+  .process-mob-img {
+    filter: grayscale(0.45) brightness(0.62);
+    transition: filter 0.85s ease;
+  }
+  .process-stage-item.mob-focus .process-mob-img {
+    filter: grayscale(0) brightness(1.02);
   }
   .process-stage-item:last-child {
     padding-bottom: 0;
@@ -350,4 +404,97 @@
   }
   /* the "003 / Process" tag only needs to appear once when stacked */
   .process-stage-item:not(:first-child) > .mono-label { display: none; }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   ATMOSPHERE + TACTILITY (Batch 1) — film grain for depth and
+   touch-press feedback so the UI feels alive on a phone.
+   ─────────────────────────────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Tactile feedback on touch devices (no hover state to lean on) */
+@media (hover: none) {
+  a[href], button { -webkit-tap-highlight-color: transparent; }
+  #services article { transition: transform 0.22s cubic-bezier(.22,.61,.36,1); }
+  #services article:active { transform: scale(0.98); }
+  a[href]:active, button[type="submit"]:active { opacity: 0.6; transition: opacity 0.08s ease; }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   SCROLL REVEAL — opt-in via [data-reveal]; powered by ScrollFX.
+   Kept off the GSAP-animated sections to avoid double-animating.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.85s cubic-bezier(.22, .61, .36, 1),
+      transform 0.85s cubic-bezier(.22, .61, .36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+  }
+  [data-reveal][data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Contact inputs — cyan focus glow for a more tactile form */
+#contact input:focus,
+#contact textarea:focus,
+#contact select:focus {
+  border-color: #29c5e8;
+  box-shadow: 0 2px 14px -7px rgba(41, 197, 232, 0.75);
+}
+
+/* ───────────────────────────────────────────────────────────────
+   MOBILE — Process timeline spine. A cyan blueprint line threads
+   the four stacked stages together, with a node at each numeral.
+   ─────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .process-stages {
+    position: relative;
+    padding-left: 26px;
+  }
+  .process-stages::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(41, 197, 232, 0.45) 0%, rgba(41, 197, 232, 0.22) 60%, rgba(41, 197, 232, 0.08) 100%);
+  }
+  /* a single node that glides down the spine, driven by scroll position */
+  .process-spine-dot {
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #29c5e8;
+    box-shadow: 0 0 16px rgba(41, 197, 232, 0.95);
+    transform: translate(-50%, -50%);
+    transition: top 0.1s linear;
+    z-index: 2;
+  }
+  .process-spine-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    animation: pulse-anim 2.4s infinite;
+  }
 }

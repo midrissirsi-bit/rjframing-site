@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -64,7 +65,9 @@ const caps: Cap[] = [
 
 export function Capabilities() {
   const headRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<number | null>(null);
+  const [openMobile, setOpenMobile] = useState<number>(0);
 
   useEffect(() => {
     if (headRef.current) {
@@ -82,8 +85,33 @@ export function Capabilities() {
     }
   }, []);
 
+  // Mobile: auto open/close the panel centered in the viewport as you scroll
+  // (the touch equivalent of the desktop hover-expand). Exactly one stays open,
+  // so the list height is constant and the scroll never jumps.
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia("(max-width: 767px)").matches) return;
+    const root = mobileRef.current;
+    if (!root) return;
+    const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-cap-index]"));
+    if (!cards.length) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number((entry.target as HTMLElement).dataset.capIndex);
+            if (!Number.isNaN(idx)) setOpenMobile(idx);
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+    cards.forEach((c) => io.observe(c));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section id="services" className="bg-bg px-6 py-24 md:px-16 md:py-32">
+    <section id="services" className="bg-bg px-6 py-16 md:px-16 md:py-32">
       <div className="mx-auto max-w-[1480px]">
         <div ref={headRef} className="mb-16 grid grid-cols-1 gap-5 md:grid-cols-[200px_1fr] md:gap-16">
           <div className="flex flex-col gap-2.5 pt-4">
@@ -120,10 +148,12 @@ export function Capabilities() {
                 }}
               >
                 {/* Background image */}
-                <img
+                <Image
                   src={c.image}
-                  alt={`${c.recent} - RJ Framing`}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out"
+                  alt={`${c.titlePre}${c.titleEm}${c.titlePost ? " " + c.titlePost : ""} — RJ Framing custom framing project, ${c.recent}, Greater Toronto Area`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 700px"
+                  className="object-cover transition-transform duration-1000 ease-out"
                   style={{
                     filter: isActive ? "grayscale(0) brightness(1.05)" : "grayscale(0.4) brightness(0.5)",
                     transform: isActive ? "scale(1.03)" : "scale(1.0)",
@@ -206,34 +236,85 @@ export function Capabilities() {
           })}
         </div>
 
-        {/* Mobile: stacked vertical cards */}
-        <div className="md:hidden flex flex-col gap-5">
-          {caps.map((c) => (
-            <article key={c.num} className="relative overflow-hidden border border-line bg-bg-elev rounded-sm">
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <img src={c.image} alt={`${c.recent} - RJ Framing`} className="absolute inset-0 h-full w-full object-cover" style={{ filter: "grayscale(0.2) brightness(0.9)", objectPosition: c.imagePos ?? "center" }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-brand">{c.num} / {c.shortLabel}</span>
-                </div>
-              </div>
-              <div className="p-6 flex flex-col gap-3">
-                <h3 className="display" style={{ fontSize: "clamp(28px, 7vw, 40px)", lineHeight: 1 }}>
-                  {c.titlePre}
-                  <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>{c.titleEm}</em>
-                  {c.titlePost && <> {c.titlePost}</>}
-                </h3>
-                <p className="text-bone-dim text-[15px] leading-relaxed">{c.desc}</p>
-                <div className="mt-2 flex items-center justify-between border-t border-line pt-3">
-                  <div>
-                    <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Recent</span>
-                    <div className="font-display text-base text-bone mt-1">{c.recent}</div>
+        {/* Mobile: scroll-driven accordion — the centered panel auto-opens,
+            mirroring the desktop hover-expand. Tap still works as an override. */}
+        <div ref={mobileRef} className="md:hidden flex flex-col gap-4">
+          {caps.map((c, i) => {
+            const isOpen = openMobile === i;
+            return (
+              <article
+                key={c.num}
+                data-cap-index={i}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 0.07}s`, borderColor: isOpen ? "rgba(41,197,232,0.4)" : "#232a36" }}
+                className="relative overflow-hidden rounded-sm border bg-bg-elev transition-colors duration-500"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenMobile(i)}
+                  aria-expanded={isOpen}
+                  className="block w-full text-left"
+                >
+                  <div
+                    className="relative w-full overflow-hidden transition-[height] duration-700"
+                    style={{ height: isOpen ? 248 : 128, transitionTimingFunction: "cubic-bezier(.4, 0, .2, 1)" }}
+                  >
+                    <Image
+                      src={c.image}
+                      alt={`${c.titlePre}${c.titleEm}${c.titlePost ? " " + c.titlePost : ""} — RJ Framing custom framing project, ${c.recent}, Greater Toronto Area`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-all duration-[900ms] ease-[cubic-bezier(.4,0,.2,1)]"
+                      style={{
+                        filter: isOpen ? "grayscale(0) brightness(1.02)" : "grayscale(0.5) brightness(0.6)",
+                        transform: isOpen ? "scale(1.05)" : "scale(1)",
+                        objectPosition: c.imagePos ?? "center",
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10 transition-opacity duration-500" style={{ opacity: isOpen ? 0.7 : 1 }} />
+                    <div className="absolute left-0 top-0 bottom-0 w-px transition-all duration-500" style={{ background: isOpen ? "#29c5e8" : "transparent", boxShadow: isOpen ? "0 0 18px rgba(41,197,232,0.7)" : "none" }} />
+                    <span className="pointer-events-none absolute left-3 top-3 h-2.5 w-2.5 border-l border-t border-brand/60" />
+                    <span className="pointer-events-none absolute right-3 top-3 h-2.5 w-2.5 border-r border-t border-brand/60" />
+                    <span className="pointer-events-none absolute bottom-3 left-3 h-2.5 w-2.5 border-b border-l border-brand/60" />
+                    <span className="pointer-events-none absolute bottom-3 right-3 h-2.5 w-2.5 border-b border-r border-brand/60" />
+
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5">
+                      <div className="min-w-0">
+                        <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-brand">{c.num} / {c.shortLabel}</span>
+                        <h3 className="display mt-1.5" style={{ fontSize: "clamp(26px, 7vw, 38px)", lineHeight: 1 }}>
+                          {c.titlePre}
+                          <em className="not-italic" style={{ fontStyle: "italic", color: "#29c5e8" }}>{c.titleEm}</em>
+                          {c.titlePost && <> {c.titlePost}</>}
+                        </h3>
+                      </div>
+                      <span
+                        aria-hidden
+                        className="ml-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-brand/50 text-brand transition-transform duration-500"
+                        style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+                      >
+                        <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}><path d="M12 5v14M5 12h14" strokeLinecap="square" /></svg>
+                      </span>
+                    </div>
                   </div>
-                  <a href="#work" className="-my-1 inline-block py-2 font-mono text-[10px] tracking-[0.2em] uppercase text-brand">View work &rarr;</a>
+                </button>
+
+                <div className="cap-body" data-open={isOpen}>
+                  <div className="cap-body-inner">
+                    <div className="flex flex-col gap-3 p-6 pt-5">
+                      <p className="text-bone-dim text-[15px] leading-relaxed">{c.desc}</p>
+                      <div className="mt-1 flex items-center justify-between border-t border-line pt-4">
+                        <div>
+                          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Recent</span>
+                          <div className="font-display text-base text-bone mt-1">{c.recent}</div>
+                        </div>
+                        <a href="#work" className="-my-1.5 inline-block py-3 font-mono text-[10px] tracking-[0.2em] uppercase text-brand">View work &rarr;</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

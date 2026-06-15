@@ -8,6 +8,8 @@ import { Process } from "@/components/process";
 import { Stats } from "@/components/stats";
 import { WorkGallery } from "@/components/work-gallery";
 import { About } from "@/components/about";
+import { Testimonials } from "@/components/testimonials";
+import { FAQ } from "@/components/faq";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 
@@ -23,6 +25,8 @@ export default function Home() {
       <Stats />
       <WorkGallery />
       <About />
+      <Testimonials />
+      <FAQ />
       <Contact />
       <Footer />
     </React.Fragment>

@@ -4,12 +4,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.rjframing.ca";
   const lastModified = new Date();
 
+  // Single-page site: search engines ignore #fragment URLs, so the homepage is
+  // the only real indexable URL. (Listing #anchors as separate URLs is a no-op.)
   return [
     { url: `${base}/`, lastModified, changeFrequency: "monthly", priority: 1.0 },
-    { url: `${base}/#services`, lastModified, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${base}/#process`, lastModified, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/#work`, lastModified, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${base}/#about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${base}/#contact`, lastModified, changeFrequency: "monthly", priority: 0.9 },
   ];
 }
