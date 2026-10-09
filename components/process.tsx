@@ -13,7 +13,6 @@ type Beat = {
   step: string;
   title: string;
   body: string;
-  fromYou: string;
   fromUs: string;
   img: string;
   w: number;
@@ -27,7 +26,6 @@ const beats: Beat[] = [
     step: "Drawings",
     title: "Send us the drawings",
     body: "Architectural and structural sets, plus the engineering. We go through them, flag anything that won't frame the way it's drawn, and come back with a price.",
-    fromYou: "Drawings, engineering, site address",
     fromUs: "A written quote and a start date",
     img: "/images/ray-portrait.jpg",
     w: 1080,
@@ -42,7 +40,6 @@ const beats: Beat[] = [
     step: "Start date",
     title: "Material in, crew on site",
     body: "Lumber, steel and trusses get ordered off your drawings and timed to land with the crew. We start on the date in the contract.",
-    fromYou: "Foundation done, site clear",
     fromUs: "Material delivered, crew on the start date",
     img: "/images/project-04-autumn-crane.jpg",
     w: 1170,
@@ -57,7 +54,6 @@ const beats: Beat[] = [
     step: "Frame",
     title: "Framed to the drawings",
     body: "Floors, walls, steel beams and roof, built to the drawings and the engineer's spec. Wood and steel are both ours, so there is no waiting on a second crew.",
-    fromYou: "Quick answers when a site question comes up",
     fromUs: "The structure, framed to spec",
     img: "/images/process-frame.jpg",
     w: 2048,
@@ -72,7 +68,6 @@ const beats: Beat[] = [
     step: "Inspection",
     title: "Inspection, then hand-off",
     body: "We're there for the framing inspection and fix anything on the list. The site gets swept and the next trade walks into a building they can work in.",
-    fromYou: "Framing inspection booked",
     fromUs: "Deficiencies fixed, site clean, ready for mechanicals",
     img: "/images/process-handoff.jpg",
     w: 1500,
@@ -80,7 +75,7 @@ const beats: Beat[] = [
     alt: "Wrapped and windowed new build with the RJ Framing site sign on the fence, ready for the next trades",
     notes: [
       { x: 0.73, y: 0.42, label: "Wrapped, windows in", side: "l" },
-      { x: 0.29, y: 0.69, label: "Our sign, our site", side: "r" },
+      { x: 0.29, y: 0.69, label: "Our sign on the fence", side: "r" },
     ],
   },
 ];
@@ -98,7 +93,7 @@ const howToSchema = {
     "@type": "HowToStep",
     position: i + 1,
     name: b.title,
-    text: `${b.body} From you: ${b.fromYou}. From us: ${b.fromUs}.`,
+    text: `${b.body} From us: ${b.fromUs}.`,
   })),
 };
 
@@ -130,7 +125,7 @@ function Schedule({ active, headRef, compact = false }: { active: number; headRe
           ))}
           {/* playhead rides across our slot with scroll */}
           <div className="pointer-events-none absolute inset-0 overflow-visible">
-            <div ref={headRef} className="process-head absolute inset-y-[-6px] left-0 w-full">
+            <div ref={headRef} className="process-head absolute inset-y-[-6px] left-0 w-0">
               <span className="process-head-line" />
             </div>
           </div>
@@ -155,17 +150,21 @@ function Schedule({ active, headRef, compact = false }: { active: number; headRe
 
 function Handoff({ beat }: { beat: Beat }) {
   return (
-    <dl className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2">
-      <div className="bg-bg/90 p-4">
-        <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-bone-mute">From you</dt>
-        <dd className="mt-1.5 text-[15px] leading-snug text-bone">{beat.fromYou}</dd>
-      </div>
-      <div className="bg-bg/90 p-4">
-        <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">From us</dt>
-        <dd className="mt-1.5 text-[15px] leading-snug text-bone">{beat.fromUs}</dd>
-      </div>
-    </dl>
+    <div className="mt-8 flex items-baseline gap-4 rounded-sm border border-line bg-bg/90 px-4 py-3.5">
+      <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.2em] text-brand">From us</span>
+      <span className="text-[15px] leading-snug text-bone">{beat.fromUs}</span>
+    </div>
   );
+}
+
+/* The playhead is a zero-width line moved by an exact pixel distance across RJ's
+   slot. No CSS transition: scroll (smoothed by Lenis) already drives it every
+   frame, and a transition on top restarts each frame and stutters. Being zero
+   width, it can never stick out past the strip and make the page scroll sideways. */
+function moveHead(el: HTMLDivElement | null, p: number) {
+  if (!el || !el.parentElement) return;
+  const x = Math.round(p * el.parentElement.clientWidth * 10) / 10;
+  el.style.transform = `translate3d(${x}px,0,0)`;
 }
 
 export function Process() {
@@ -229,7 +228,7 @@ export function Process() {
         end: "bottom bottom",
         onUpdate: (self) => {
           setIdx(self.progress);
-          if (deskHead.current) deskHead.current.style.transform = `translateX(${self.progress * 100}%)`;
+          moveHead(deskHead.current, self.progress);
         },
       });
       return () => {
@@ -248,7 +247,7 @@ export function Process() {
         end: "bottom 60%",
         onUpdate: (self) => {
           setIdx(self.progress);
-          if (mobHead.current) mobHead.current.style.transform = `translateX(${self.progress * 100}%)`;
+          moveHead(mobHead.current, self.progress);
         },
       });
       return () => st.kill();
@@ -283,7 +282,7 @@ export function Process() {
               </span>
             </h2>
             <p className="mt-6 max-w-[56ch] text-[17px] leading-relaxed text-bone-dim">
-              Every job runs the same four steps. Here is what we need from you at each one, and what you get back.
+              Every job runs the same four steps. Here&apos;s what you get from us at each one.
             </p>
           </div>
         </div>

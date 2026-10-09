@@ -126,7 +126,7 @@ export function ServicePage({ service: s }: { service: Service }) {
                   <>
                     <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">{s.story.label}</span>
                     <blockquote className="mt-3 font-display text-[22px] leading-snug text-bone md:text-[26px]" style={{ fontVariationSettings: "'opsz' 36" }}>
-                      &ldquo;{s.story.text}&rdquo;
+                      {s.story.quote === false ? s.story.text : <>&ldquo;{s.story.text}&rdquo;</>}
                     </blockquote>
                     <span className="mt-4 block font-mono text-[10px] uppercase tracking-[0.18em] text-bone-mute">{s.story.source}</span>
                   </>

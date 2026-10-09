@@ -17,6 +17,15 @@
     text-rendering: optimizeLegibility;
   }
   ::selection { background: #29c5e8; color: #0d1219; }
+  /* Phones: the page only ever moves vertically. `clip` on html as well as body
+     (body alone is ignored by mobile browsers), and clip rather than hidden so the
+     sticky sections keep sticking. Touch is vertical-pan + pinch-zoom only; the
+     gallery strip and lightbox handle their own sideways swipes in JS, so they
+     still work (they set their own touch-action, which narrows this one). */
+  @media (max-width: 767px) {
+    html, body { overflow-x: clip; overscroll-behavior-x: none; }
+    body { touch-action: pan-y pinch-zoom; }
+  }
   html.lenis, html.lenis body { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -169,7 +178,9 @@
 
 /* === Process: RJ's slot in the build schedule ===
    Plates stack; each one is raised from the bottom like a wall going up. */
-.process { background: linear-gradient(180deg, #0d1219 0%, transparent 6%, transparent 94%, #0d1219 100%), #14181f; }
+.process { background: linear-gradient(180deg, #0d1219 0%, transparent 6%, transparent 94%, #0d1219 100%), #14181f;
+  /* vertical only while in this section: clip (not hidden) so the sticky stage still sticks */
+  overflow-x: clip; touch-action: pan-y pinch-zoom; }
 
 .process-plate-stack { clip-path: inset(100% 0 0 0); transition: clip-path 0.9s cubic-bezier(.65,0,.25,1); }
 .process-plate-stack.shown { clip-path: inset(0 0 0 0); }
@@ -222,7 +233,7 @@
 .process-seg.rj b { font-weight: 500; margin-right: 4px; }
 .process-seg.rj.done { color: #d6dde5; background: rgba(41,197,232,.12); border-top-color: #29c5e8; }
 .process-seg.rj.now { color: #fff; background: rgba(41,197,232,.2); }
-.process-head { transition: transform .12s linear; }
+.process-head { will-change: transform; } /* no transition: scroll drives it every frame */
 .process-head-line {
   position: absolute; left: 0; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #29c5e8;
   box-shadow: 0 0 0 1px rgba(6,7,9,.6);

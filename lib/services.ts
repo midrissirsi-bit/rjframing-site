@@ -18,7 +18,7 @@ export type Service = {
   hero: Photo;
   scopeTitle: string;
   scope: { item: string; detail: string }[];
-  story?: { label: string; text: string; source: string };
+  story?: { label: string; text: string; source: string; quote?: boolean }; // quote: a customer's words, shown in quote marks
   projects: Project[];
   faq: QA[];
 };
@@ -32,7 +32,7 @@ const sharedFaq: QA[] = [
   },
   {
     q: "How fast do you get back to me?",
-    a: "Within 24 hours. Call (289) 688-5951, email rjframinginc@gmail.com, or use the quote form on this page.",
+    a: "Within 24 hours. Call (289) 688-5951, email rjframinginc@gmail.com, or fill in the form below.",
   },
   {
     q: "Which areas do you work in?",
@@ -50,7 +50,7 @@ export const services: Service[] = [
     h1: "Steel beams and columns, set by the crew",
     h1Em: "that frames around them.",
     intro:
-      "Most framing crews wait on a steel installer. We don't: wood framing and structural steel are both our work, so the beam goes in when the framing needs it. Installed to the engineer's specification and ready for inspection.",
+      "Most framing crews wait on a steel installer. We don't. Wood framing and structural steel are both our work, so the beam goes in when the framing needs it. Installed to the engineer's specification and ready for inspection.",
     hero: {
       img: "/images/process-frame.jpg",
       w: 2048,
@@ -90,7 +90,7 @@ export const services: Service[] = [
       },
       {
         q: "Do you do commercial steel work?",
-        a: "Yes. Steel-stud framing for commercial buildouts and fire-rated assemblies, and structural steel on commercial sites; one of our Google reviews is from a truck shop.",
+        a: "Yes. Steel-stud framing for commercial buildouts and fire-rated assemblies, and structural steel on commercial jobs. We've done structural work in a truck shop, for one.",
       },
       ...sharedFaq,
     ],
@@ -125,9 +125,10 @@ export const services: Service[] = [
       { item: "Tie-ins and reinforcement", detail: "Blocking, reinforcement and renovation framing on the existing build." },
     ],
     story: {
-      label: "A recent job, in our words",
-      text: "Rear addition, and we ripped off the roof to raise the second floor to give 10ft height, along with a new roof framed.",
-      source: "@rjframing.ca on Instagram, June 2026",
+      label: "A recent job",
+      text: "On a rear addition, we ripped the roof off, raised the second floor to 10-foot ceilings and framed a new roof.",
+      source: "Rear addition, 2026",
+      quote: false,
     },
     projects: [
       { title: "Raised second floor", where: "Rear addition, 10 ft ceilings, new roof", img: "/images/ig-addition-raised-second-floor.jpg", alt: "Finished rear addition with a raised second floor and new roof framed by RJ Framing" },
