@@ -12,6 +12,7 @@ import { Testimonials } from "@/components/testimonials";
 import { FAQ } from "@/components/faq";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { MobileCta } from "@/components/mobile-cta";
 
 export default function Home() {
   return (
@@ -29,6 +30,7 @@ export default function Home() {
       <FAQ />
       <Contact />
       <Footer />
+      <MobileCta />
     </React.Fragment>
   );
 }

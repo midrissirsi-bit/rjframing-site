@@ -249,9 +249,16 @@ export function WorkGallery() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
 
               <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                <h3 className="font-display text-bone text-lg md:text-xl leading-tight" style={{ fontVariationSettings: "'opsz' 36" }}>
-                  {item.title}
-                </h3>
+                {/* the strip renders every tile twice to loop; only the first pass is a real heading */}
+                {i < COUNT ? (
+                  <h3 className="font-display text-bone text-lg md:text-xl leading-tight" style={{ fontVariationSettings: "'opsz' 36" }}>
+                    {item.title}
+                  </h3>
+                ) : (
+                  <p className="font-display text-bone text-lg md:text-xl leading-tight" style={{ fontVariationSettings: "'opsz' 36" }}>
+                    {item.title}
+                  </p>
+                )}
                 {item.desc && (
                   <p className="font-mono text-[9px] md:text-[10px] tracking-[0.18em] uppercase text-bone-mute mt-1">
                     {item.desc}

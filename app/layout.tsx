@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LenisProvider } from "@/components/lenis-provider";
 import { ScrollFX } from "@/components/scroll-fx";
+import { yearsLabel, inspectionLabel } from "@/lib/facts";
 
 export const metadata: Metadata = {
-  title: "RJ Framing — Rough Carpentry. Custom home framing & steel in the GTA.",
+  title: "Framing Contractor in Toronto & the GTA | RJ Framing",
   description:
-    "Custom home framing, additions, and structural steel across the Greater Toronto Area. The framing other crews turn down, built to spec. 5+ years, 100% inspection pass.",
+    `Custom home framing, additions and structural steel across the GTA. The framing other crews turn down, built to spec. ${yearsLabel}, ${inspectionLabel}.`,
   metadataBase: new URL("https://www.rjframing.ca"),
   alternates: {
     canonical: "https://www.rjframing.ca/",
@@ -81,6 +82,9 @@ const schema = {
     { "@type": "City", name: "Vaughan" },
     { "@type": "City", name: "Aurora" },
     { "@type": "City", name: "Richmond Hill" },
+    { "@type": "City", name: "North York" },
+    { "@type": "City", name: "Scarborough" },
+    { "@type": "City", name: "Stouffville" },
     { "@type": "AdministrativeArea", name: "Greater Toronto Area" },
   ],
   openingHoursSpecification: [
@@ -97,7 +101,8 @@ const schema = {
       closes: "14:00",
     },
   ],
-  sameAs: ["https://www.instagram.com/rjframing.ca/"],
+  sameAs: ["https://www.instagram.com/rjframing.ca/", "https://maps.google.com/?cid=4447148234619814017"],
+  hasMap: "https://maps.google.com/?cid=4447148234619814017",
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Framing Services",

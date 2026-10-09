@@ -17,6 +17,7 @@ type Cap = {
   image: string;
   imagePos?: string;
   recent: string;
+  page?: { href: string; label: string };
 };
 
 const caps: Cap[] = [
@@ -29,6 +30,7 @@ const caps: Cap[] = [
     desc: "Custom homes, additions, renovations. From foundation to roof.",
     image: "/images/project-10-forest.jpg",
     recent: "Hoggs Hollow, Toronto",
+    page: { href: "/custom-homes", label: "Custom home framing" },
   },
   {
     num: "02",
@@ -50,6 +52,7 @@ const caps: Cap[] = [
     image: "/images/project-12-steel-beams.jpg",
     imagePos: "center bottom",
     recent: "Project Glengrove",
+    page: { href: "/steel-beams", label: "Steel beam installation" },
   },
   {
     num: "04",
@@ -223,8 +226,8 @@ export function Capabilities() {
                       {c.titlePost && <> {c.titlePost}</>}
                     </h3>
                     <p className="text-bone-dim leading-relaxed text-[15px]">{c.desc}</p>
-                    <a href="#work" className="mt-2 inline-flex items-center gap-2.5 font-mono text-[11px] tracking-[0.2em] uppercase text-bone hover:text-brand transition-colors w-fit pointer-events-auto">
-                      View the work
+                    <a href={c.page?.href ?? "#work"} className="mt-2 inline-flex items-center gap-2.5 font-mono text-[11px] tracking-[0.2em] uppercase text-bone hover:text-brand transition-colors w-fit pointer-events-auto">
+                      {c.page?.label ?? "View the work"}
                       <svg className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                         <path d="M5 19 L19 5 M19 5 H8 M19 5 V16" strokeLinecap="square" />
                       </svg>
@@ -307,7 +310,7 @@ export function Capabilities() {
                           <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">Recent</span>
                           <div className="font-display text-base text-bone mt-1">{c.recent}</div>
                         </div>
-                        <a href="#work" className="-my-1.5 inline-block py-3 font-mono text-[10px] tracking-[0.2em] uppercase text-brand">View work &rarr;</a>
+                        <a href={c.page?.href ?? "#work"} className="-my-2 inline-flex min-h-[44px] items-center px-1 font-mono text-[10px] tracking-[0.2em] uppercase text-brand">{c.page ? "More" : "View work"} &rarr;</a>
                       </div>
                     </div>
                   </div>

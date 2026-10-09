@@ -13,6 +13,17 @@ export function Footer() {
           <span>Licensed &amp; insured · Ontario</span>
           <span>WSIB covered · Clearance on request</span>
           <span>Built with intention.</span>
+          <nav aria-label="Services" className="mt-3 flex flex-col gap-2">
+            {[
+              { href: "/steel-beams", label: "Steel beam installation" },
+              { href: "/additions", label: "Additions & second storeys" },
+              { href: "/custom-homes", label: "Custom home framing" },
+            ].map((s) => (
+              <a key={s.href} href={s.href} className="inline-flex min-h-[44px] w-fit items-center text-bone-dim transition-colors hover:text-bone">
+                {s.label}
+              </a>
+            ))}
+          </nav>
         </div>
         <div className="flex flex-col gap-2">
           {[

@@ -34,9 +34,14 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
     // Anchor links
     const onClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
+      // "#x" anywhere, or "/#x" when we're already on the home page (nav links use "/#x" so they work from service pages too)
+      const target = (e.target as HTMLElement).closest('a[href^="#"], a[href^="/#"]') as HTMLAnchorElement | null;
       if (!target) return;
-      const id = target.getAttribute("href");
+      let id = target.getAttribute("href");
+      if (id?.startsWith("/#")) {
+        if (window.location.pathname !== "/") return;
+        id = id.slice(1);
+      }
       if (!id || id.length <= 1) return;
       const el = document.querySelector(id);
       if (!el) return;

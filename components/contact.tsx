@@ -83,7 +83,11 @@ export function Contact() {
                 <label className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute" htmlFor="msg">Tell us about your project</label>
                 <textarea id="msg" name="msg" placeholder="Size, timeline, drawings, anything you want us to know" className="min-h-[100px] resize-y border-0 border-b border-line bg-transparent py-3 font-sans text-[17px] text-bone outline-none focus:border-brand transition-colors" />
               </div>
-              <button type="submit" disabled={status === "submitting"} className="mt-3 inline-flex items-center gap-3.5 self-start rounded-full bg-brand px-9 py-5 font-mono text-[12px] tracking-[0.2em] uppercase text-bg transition-all duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed" style={{ boxShadow: "0 0 30px -8px rgba(41,197,232,0.5)" }}>
+              <p className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-bone-dim">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" style={{ boxShadow: "0 0 8px #29c5e8" }} />
+                We reply within 24 hours
+              </p>
+              <button type="submit" disabled={status === "submitting"} className="-mt-2 inline-flex items-center gap-3.5 self-start rounded-full bg-brand px-9 py-5 font-mono text-[12px] tracking-[0.2em] uppercase text-bg transition-all duration-300 hover:bg-bone disabled:opacity-60 disabled:cursor-not-allowed" style={{ boxShadow: "0 0 30px -8px rgba(41,197,232,0.5)" }}>
                 {status === "submitting" ? "Sending..." : "Submit quote request"}
                 <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
                   <path d="M5 19 L19 5 M19 5 H8 M19 5 V16" strokeLinecap="square"/>
@@ -97,6 +101,7 @@ export function Contact() {
           </div>
 
           <aside data-reveal style={{ ["--reveal-delay" as string]: "0.12s" }} className="flex flex-col gap-9 border-t border-line pt-5">
+            <Info label="Response time">Within 24 hours</Info>
             <Info label="Call direct" href="tel:+12896885951">+1 (289) 688&middot;5951</Info>
             <Info label="Email" href="mailto:rjframinginc@gmail.com">rjframinginc@gmail.com</Info>
             <Info label="Service area">GTA &amp; surrounding<br />areas</Info>
@@ -129,7 +134,7 @@ function Info({ label, href, children }: { label: string; href?: string; childre
     <div className="flex flex-col gap-1.5">
       <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-bone-mute">{label}</span>
       {href ? (
-        <a className={valueClasses} href={href} style={{ fontSize: "clamp(22px, 2.2vw, 30px)", fontVariationSettings: "'opsz' 36" }}>{children}</a>
+        <a className={`${valueClasses} flex min-h-[44px] items-center`} href={href} style={{ fontSize: "clamp(22px, 2.2vw, 30px)", fontVariationSettings: "'opsz' 36" }}>{children}</a>
       ) : (
         <span className={valueClasses} style={{ fontSize: "clamp(22px, 2.2vw, 30px)", fontVariationSettings: "'opsz' 36" }}>{children}</span>
       )}

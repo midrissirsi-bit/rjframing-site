@@ -2,16 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { AnnotatedPhoto, type Note } from "@/components/annotated-photo";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
-
-/* A note is pinned to a real feature in the photo. x/y are fractions of the
-   ORIGINAL image, so the pin stays on the steel beam (or the sign, or Ray)
-   however object-cover crops it at a given box size. */
-type Note = { x: number; y: number; label: string; side: "l" | "r" };
 
 type Beat = {
   step: string;
@@ -107,58 +103,6 @@ const howToSchema = {
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
-
-/* ---------- a photo with notes pinned to real features ---------- */
-function Plate({ beat, on, className = "" }: { beat: Beat; on: boolean; className?: string }) {
-  const boxRef = useRef<HTMLDivElement>(null);
-  const [box, setBox] = useState({ w: 0, h: 0 });
-
-  useEffect(() => {
-    const el = boxRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([e]) => setBox({ w: e.contentRect.width, h: e.contentRect.height }));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  // object-cover maths: where does a point on the original image land in this box?
-  const scale = box.w && box.h ? Math.max(box.w / beat.w, box.h / beat.h) : 0;
-  const offX = (box.w - beat.w * scale) / 2;
-  const offY = (box.h - beat.h * scale) / 2;
-
-  return (
-    <div ref={boxRef} className={`process-plate overflow-hidden ${on ? "on" : ""} ${className}`}>
-      <div className="process-plate-img absolute inset-0">
-        <Image src={beat.img} alt={beat.alt} fill sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
-      </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/70 via-transparent to-bg/20" />
-      {scale > 0 &&
-        beat.notes.map((n, i) => {
-          const x = offX + n.x * beat.w * scale;
-          const y = offY + n.y * beat.h * scale;
-          if (x < 12 || x > box.w - 12 || y < 12 || y > box.h - 12) return null;
-          // keep the label inside the photo: take the preferred side if the label fits, else the roomier one
-          const lead = box.w < 500 ? 46 : 64; // dot + leader line + breathing room
-          const room = { l: x - lead, r: box.w - x - lead };
-          const want = n.label.length * (box.w < 500 ? 7 : 8.4) + 20;
-          const side: "l" | "r" = room[n.side] >= want ? n.side : room.l > room.r ? "l" : "r";
-          return (
-            <div
-              key={n.label}
-              className={`process-note absolute ${side === "l" ? "flex-row-reverse" : ""} flex items-center`}
-              style={{ left: x, top: y, transitionDelay: `${0.45 + i * 0.18}s`, transform: `translate(${side === "l" ? "-100%" : "0"}, -50%)` }}
-            >
-              <span className="process-note-dot" />
-              <span className={`process-note-line ${side === "l" ? "origin-right" : "origin-left"}`} style={{ transitionDelay: `${0.5 + i * 0.18}s` }} />
-              <span className="process-note-label" style={{ transitionDelay: `${0.75 + i * 0.18}s`, maxWidth: Math.max(90, room[side]) }}>
-                {n.label}
-              </span>
-            </div>
-          );
-        })}
-    </div>
-  );
-}
 
 /* ---------- the build schedule, with RJ's slot in it ---------- */
 function Schedule({ active, headRef, compact = false }: { active: number; headRef: React.RefObject<HTMLDivElement>; compact?: boolean }) {
@@ -351,9 +295,9 @@ export function Process() {
           <div className="grid min-h-0 flex-1 grid-cols-12 gap-10 pr-16">
             <div className="relative col-span-7 min-h-0">
               {beats.map((b, i) => (
-                <Plate
+                <AnnotatedPhoto
                   key={b.img}
-                  beat={b}
+                  photo={b}
                   on={i === active}
                   className={`process-plate-stack absolute inset-0 rounded-r-sm ${i <= active ? "shown" : ""}`}
                 />
@@ -396,7 +340,7 @@ export function Process() {
         <div ref={stackRef} className="px-6">
           {beats.map((b, i) => (
             <article key={b.title} className="pt-12">
-              <Plate beat={b} on={i === active} className="relative aspect-[4/5] w-full rounded-sm border border-line" />
+              <AnnotatedPhoto photo={b} on={i === active} className="relative aspect-[4/5] w-full rounded-sm border border-line" />
               <span className="mt-6 block font-mono text-[11px] uppercase tracking-[0.2em] text-brand">
                 Step {pad(i + 1)} &middot; {b.step}
               </span>

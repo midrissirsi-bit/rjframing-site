@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#work", label: "Portfolio" },
-  { href: "#services", label: "Services" },
-  { href: "#process", label: "Process" },
-  { href: "#about", label: "About" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#work", label: "Portfolio" },
+  { href: "/#services", label: "Services" },
+  { href: "/#process", label: "Process" },
+  { href: "/#about", label: "About" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Nav() {
@@ -50,7 +50,7 @@ export function Nav() {
         className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 text-bone backdrop-blur-md transition-[height,background-color] duration-300 ${scrolled ? "h-14 md:h-20" : "h-16 md:h-24"}`}
         style={{ background: scrolled ? "rgba(10,13,18,0.9)" : "rgba(13,18,25,0.6)", borderBottom: "1px solid rgba(35,42,54,0.5)" }}
       >
-        <a href="#top" className="flex items-center h-full" onClick={() => setOpen(false)}>
+        <a href="/#top" className="flex items-center h-full" onClick={() => setOpen(false)}>
           <img
             src="/images/logo.png"
             alt="RJ Framing"
@@ -72,7 +72,7 @@ export function Nav() {
 
         {/* Desktop CTA */}
         <a
-          href="#contact"
+          href="/#contact"
           className="hidden md:inline-flex items-center gap-2.5 rounded-full border border-bone px-4 py-2.5 font-mono text-[11px] tracking-[0.18em] uppercase transition-all duration-300 hover:bg-bone hover:text-bg"
         >
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand" style={{ boxShadow: "0 0 8px #29c5e8" }} />
@@ -85,7 +85,7 @@ export function Nav() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen(!open)}
-          className="md:hidden relative z-[60] inline-flex flex-col justify-center gap-[6px] h-10 w-10 -mr-2"
+          className="md:hidden relative z-[60] inline-flex flex-col justify-center gap-[6px] h-11 w-11 -mr-2"
         >
           <span
             className="block h-px w-7 bg-bone transition-transform duration-300 ease-out mx-auto"
@@ -130,7 +130,7 @@ export function Nav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-bone px-6 py-3.5 font-mono text-[12px] tracking-[0.2em] uppercase"
           >

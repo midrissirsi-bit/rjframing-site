@@ -52,18 +52,17 @@ export function Hero() {
         <div className="grain absolute inset-0 z-[2] pointer-events-none" />
         <div className="hero-vignette absolute inset-0 z-[1] pointer-events-none" />
 
-        <div className="relative z-[3] flex items-center gap-3 text-bone">
-          <span className="pulse-dot inline-block h-2 w-2 rounded-full bg-brand" />
-          <span className="font-mono text-[11px] tracking-[0.18em] uppercase">
-            EST. 2020 · GTA
-          </span>
-        </div>
-
         <h1
           ref={headlineRef}
-          className="hero-headline display relative z-[3] mt-6"
+          className="hero-headline display relative z-[3]"
           style={{ fontSize: "clamp(56px, 11.5vw, 184px)" }}
         >
+          {/* the keyword line is part of the H1 so search engines read "Framing contractor, Toronto & GTA" first */}
+          <span className="mb-6 flex items-center gap-3 font-mono text-[11px] font-normal not-italic uppercase tracking-[0.18em] text-bone" style={{ lineHeight: 1.4, letterSpacing: "0.18em" }}>
+            <span className="pulse-dot inline-block h-2 w-2 shrink-0 rounded-full bg-brand" />
+            <span>Framing contractor &middot; Toronto &amp; GTA &middot; Est. 2020</span>
+          </span>
+          <span className="sr-only">: </span>
           <span className="line"><span className="word">We</span> <span className="word">frame</span></span>
           <span className="line"><span className="word">the</span> <span className="word"><em>future.</em></span></span>
         </h1>

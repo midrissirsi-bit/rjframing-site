@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { facts } from "@/lib/facts";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,12 +15,12 @@ type StatItem = {
 };
 
 const statItems: StatItem[] = [
-  { num: "5", suffix: "+", label: "Years in trade", emphasize: true },
-  { num: "76", label: "Builds completed" },
-  { num: "240", suffix: "k sqft", label: "Sq ft framed" },
-  { num: "147", label: "Steel beams set" },
-  { num: "100", suffix: "%", label: "Inspection pass", emphasize: true },
-  { num: "0", label: "Callbacks last yr", emphasize: true },
+  { num: String(facts.yearsInTrade), suffix: "+", label: "Years in trade", emphasize: true },
+  { num: String(facts.buildsCompleted), label: "Builds completed" },
+  { num: String(facts.sqftFramedK), suffix: "k sqft", label: "Sq ft framed" },
+  { num: String(facts.steelBeamsSet), label: "Steel beams set" },
+  { num: String(facts.inspectionPassPct), suffix: "%", label: "Inspection pass", emphasize: true },
+  { num: String(facts.callbacksLastYear), label: "Callbacks last yr", emphasize: true },
   { num: "GTA", suffix: " + Surrounding", label: "Service radius" },
 ];
 
