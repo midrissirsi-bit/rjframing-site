@@ -106,7 +106,7 @@ export function Contact() {
                 Mon-Fri 8:00-19:00<br />Sat 8:00-14:00<br />Sun closed
               </span>
             </div>
-            <Info label="Follow" href="https://www.instagram.com/rj.framing/">@rj.framing &uarr;</Info>
+            <Info label="Follow" href="https://www.instagram.com/rjframing.ca/">@rjframing.ca &uarr;</Info>
           </aside>
         </div>
       </div>

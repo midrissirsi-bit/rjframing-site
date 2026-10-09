@@ -1,96 +1,313 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const stages = [
-  { num: "01", title: "Contact and Estimate",         img: "/images/process-survey.png",  body: "Send the prints, share the scope. We will get back to you as soon as we can." },
-  { num: "02", title: "Coordinate with Suppliers",    img: "/images/process-suppliers.png",   body: "Lumber, steel, hardware. Suppliers locked, lead times confirmed, deliveries staged to the crew's schedule. Nothing waits on a truck that should have been ordered last week." },
-  { num: "03", title: "Frame",                        img: "/images/process-frame.jpg",   imgPos: "40% center", body: "Crew is on site as per the contract start date and the project is framed to spec." },
-  { num: "04", title: "Hand-Off",                      img: "/images/process-handoff.jpg", body: "Site walk-through, punch list cleared, site swept. The next trade walks in ready to work. Onto the next." },
+/* A note is pinned to a real feature in the photo. x/y are fractions of the
+   ORIGINAL image, so the pin stays on the steel beam (or the sign, or Ray)
+   however object-cover crops it at a given box size. */
+type Note = { x: number; y: number; label: string; side: "l" | "r" };
+
+type Beat = {
+  step: string;
+  title: string;
+  body: string;
+  fromYou: string;
+  fromUs: string;
+  img: string;
+  w: number;
+  h: number;
+  alt: string;
+  notes: Note[];
+};
+
+const beats: Beat[] = [
+  {
+    step: "Drawings",
+    title: "Send us the drawings",
+    body: "Architectural and structural sets, plus the engineering. We go through them, flag anything that won't frame the way it's drawn, and come back with a price.",
+    fromYou: "Drawings, engineering, site address",
+    fromUs: "A written quote and a start date",
+    img: "/images/ray-portrait.jpg",
+    w: 1080,
+    h: 1920,
+    alt: "Ray, founder of RJ Framing, on the steps of a framed custom home with steel beams in Toronto",
+    notes: [
+      { x: 0.47, y: 0.5, label: "Ray, founder", side: "r" },
+      { x: 0.4, y: 0.4, label: "Steel by our crew", side: "l" },
+    ],
+  },
+  {
+    step: "Start date",
+    title: "Material in, crew on site",
+    body: "Lumber, steel and trusses get ordered off your drawings and timed to land with the crew. We start on the date in the contract.",
+    fromYou: "Foundation done, site clear",
+    fromUs: "Material delivered, crew on the start date",
+    img: "/images/project-04-autumn-crane.jpg",
+    w: 1170,
+    h: 649,
+    alt: "Roof trusses craned onto a second storey addition framed by RJ Framing in North York",
+    notes: [
+      { x: 0.6, y: 0.33, label: "Trusses craned in", side: "r" },
+      { x: 0.47, y: 0.55, label: "2nd storey addition, North York", side: "l" },
+    ],
+  },
+  {
+    step: "Frame",
+    title: "Framed to the drawings",
+    body: "Floors, walls, steel beams and roof, built to the drawings and the engineer's spec. Wood and steel are both ours, so there is no waiting on a second crew.",
+    fromYou: "Quick answers when a site question comes up",
+    fromUs: "The structure, framed to spec",
+    img: "/images/process-frame.jpg",
+    w: 2048,
+    h: 1152,
+    alt: "Custom home in Toronto framed in wood with steel beams by RJ Framing",
+    notes: [
+      { x: 0.45, y: 0.24, label: "Steel beams, engineer's spec", side: "r" },
+      { x: 0.42, y: 0.6, label: "Walls framed and sheathed", side: "l" },
+    ],
+  },
+  {
+    step: "Inspection",
+    title: "Inspection, then hand-off",
+    body: "We're there for the framing inspection and fix anything on the list. The site gets swept and the next trade walks into a building they can work in.",
+    fromYou: "Framing inspection booked",
+    fromUs: "Deficiencies fixed, site clean, ready for mechanicals",
+    img: "/images/process-handoff.jpg",
+    w: 1500,
+    h: 2000,
+    alt: "Wrapped and windowed new build with the RJ Framing site sign on the fence, ready for the next trades",
+    notes: [
+      { x: 0.73, y: 0.42, label: "Wrapped, windows in", side: "l" },
+      { x: 0.29, y: 0.69, label: "Our sign, our site", side: "r" },
+    ],
+  },
 ];
+
+const before = ["Permits", "Excavation", "Foundation"];
+const after = ["Mechanicals", "Insulation", "Drywall", "Finishes"];
 
 const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   name: "How RJ Framing frames a build",
   description:
-    "The four stages RJ Framing follows on every custom framing and structural steel project across the Greater Toronto Area.",
-  step: stages.map((s, i) => ({
+    "Where framing sits in a custom home or addition, and the four stages RJ Framing runs on every framing and structural steel job across the Greater Toronto Area.",
+  step: beats.map((b, i) => ({
     "@type": "HowToStep",
     position: i + 1,
-    name: s.title,
-    text: s.body,
+    name: b.title,
+    text: `${b.body} From you: ${b.fromYou}. From us: ${b.fromUs}.`,
   })),
 };
 
-export function Process() {
-  const trackRef = useRef<HTMLDivElement>(null);
+const pad = (n: number) => String(n).padStart(2, "0");
 
-  // GSAP matchMedia keeps the desktop and mobile behaviours correct across
-  // viewport changes — it tears down and re-initialises when the 768px
-  // breakpoint is crossed, so resizing never leaves the section stuck.
+/* ---------- a photo with notes pinned to real features ---------- */
+function Plate({ beat, on, className = "" }: { beat: Beat; on: boolean; className?: string }) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [box, setBox] = useState({ w: 0, h: 0 });
+
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const mm = gsap.matchMedia();
+    const el = boxRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setBox({ w: e.contentRect.width, h: e.contentRect.height }));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
-    // Desktop: pinned scroll-jack that swaps the active stage + image.
+  // object-cover maths: where does a point on the original image land in this box?
+  const scale = box.w && box.h ? Math.max(box.w / beat.w, box.h / beat.h) : 0;
+  const offX = (box.w - beat.w * scale) / 2;
+  const offY = (box.h - beat.h * scale) / 2;
+
+  return (
+    <div ref={boxRef} className={`process-plate overflow-hidden ${on ? "on" : ""} ${className}`}>
+      <div className="process-plate-img absolute inset-0">
+        <Image src={beat.img} alt={beat.alt} fill sizes="(max-width: 768px) 100vw, 60vw" className="object-cover" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/70 via-transparent to-bg/20" />
+      {scale > 0 &&
+        beat.notes.map((n, i) => {
+          const x = offX + n.x * beat.w * scale;
+          const y = offY + n.y * beat.h * scale;
+          if (x < 12 || x > box.w - 12 || y < 12 || y > box.h - 12) return null;
+          // keep the label inside the photo: take the preferred side if the label fits, else the roomier one
+          const lead = box.w < 500 ? 46 : 64; // dot + leader line + breathing room
+          const room = { l: x - lead, r: box.w - x - lead };
+          const want = n.label.length * (box.w < 500 ? 7 : 8.4) + 20;
+          const side: "l" | "r" = room[n.side] >= want ? n.side : room.l > room.r ? "l" : "r";
+          return (
+            <div
+              key={n.label}
+              className={`process-note absolute ${side === "l" ? "flex-row-reverse" : ""} flex items-center`}
+              style={{ left: x, top: y, transitionDelay: `${0.45 + i * 0.18}s`, transform: `translate(${side === "l" ? "-100%" : "0"}, -50%)` }}
+            >
+              <span className="process-note-dot" />
+              <span className={`process-note-line ${side === "l" ? "origin-right" : "origin-left"}`} style={{ transitionDelay: `${0.5 + i * 0.18}s` }} />
+              <span className="process-note-label" style={{ transitionDelay: `${0.75 + i * 0.18}s`, maxWidth: Math.max(90, room[side]) }}>
+                {n.label}
+              </span>
+            </div>
+          );
+        })}
+    </div>
+  );
+}
+
+/* ---------- the build schedule, with RJ's slot in it ---------- */
+function Schedule({ active, headRef, compact = false }: { active: number; headRef: React.RefObject<HTMLDivElement>; compact?: boolean }) {
+  return (
+    <div className="process-schedule w-full" aria-label="Where framing sits in a build schedule">
+      <div className="mb-2 flex items-end justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-bone-mute">
+        <span>Your build</span>
+        <span className="text-brand">RJ Framing &middot; step {pad(active + 1)} / {pad(beats.length)}</span>
+      </div>
+      <div className="flex h-12 items-stretch gap-[3px] md:h-14">
+        {!compact &&
+          before.map((t) => (
+            <div key={t} className="process-seg ghost flex-1">
+              <span>{t}</span>
+            </div>
+          ))}
+
+        <div className={`relative flex ${compact ? "flex-1" : "flex-[5.6]"} gap-[3px]`}>
+          {beats.map((b, i) => (
+            <div key={b.step} className={`process-seg rj flex-1 ${i <= active ? "done" : ""} ${i === active ? "now" : ""}`}>
+              <span>
+                <b>{pad(i + 1)}</b> {b.step}
+              </span>
+            </div>
+          ))}
+          {/* playhead rides across our slot with scroll */}
+          <div className="pointer-events-none absolute inset-0 overflow-visible">
+            <div ref={headRef} className="process-head absolute inset-y-[-6px] left-0 w-full">
+              <span className="process-head-line" />
+            </div>
+          </div>
+        </div>
+
+        {!compact &&
+          after.map((t) => (
+            <div key={t} className="process-seg ghost flex-1">
+              <span>{t}</span>
+            </div>
+          ))}
+      </div>
+      {compact && (
+        <div className="mt-1.5 flex justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-bone-mute/70">
+          <span>&larr; Foundation</span>
+          <span>Mechanicals &rarr;</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Handoff({ beat }: { beat: Beat }) {
+  return (
+    <dl className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-line bg-line sm:grid-cols-2">
+      <div className="bg-bg/90 p-4">
+        <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-bone-mute">From you</dt>
+        <dd className="mt-1.5 text-[15px] leading-snug text-bone">{beat.fromYou}</dd>
+      </div>
+      <div className="bg-bg/90 p-4">
+        <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">From us</dt>
+        <dd className="mt-1.5 text-[15px] leading-snug text-bone">{beat.fromUs}</dd>
+      </div>
+    </dl>
+  );
+}
+
+export function Process() {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
+  const deskHead = useRef<HTMLDivElement>(null);
+  const mobHead = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const mm = gsap.matchMedia();
+    const setIdx = (p: number) => setActive(Math.min(beats.length - 1, Math.floor(p * beats.length)));
+
+    // heading: words rise out of a mask
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const h = headingRef.current;
+      if (!h) return;
+      const split = SplitText.create(h.querySelectorAll(".ph-text"), { type: "words", mask: "words" });
+      const tween = gsap.from(split.words, {
+        yPercent: 110,
+        duration: 1,
+        ease: "power4.out",
+        stagger: 0.045,
+        scrollTrigger: { trigger: h, start: "top 82%" },
+      });
+      const pill = gsap.from(h.querySelector(".ph-pill"), {
+        scaleX: 0,
+        transformOrigin: "left center",
+        duration: 0.9,
+        ease: "power3.out",
+        delay: 0.25,
+        scrollTrigger: { trigger: h, start: "top 82%" },
+      });
+      return () => {
+        tween.kill();
+        pill.kill();
+        split.revert();
+      };
+    });
+
+    // desktop: sticky stage, scroll advances the beats and the playhead
     mm.add("(min-width: 768px)", () => {
-      const textItems = track.querySelectorAll(".process-stage-item");
-      const imgItems = track.querySelectorAll(".process-img-stage");
-      const total = textItems.length;
-      const trigger = ScrollTrigger.create({
+      const track = trackRef.current;
+      if (!track) return;
+      // pin the stage height in px so a resizing browser chrome can't move it mid-scroll
+      let lastW = 0;
+      let lastH = 0;
+      const pinVh = () => {
+        // ignore small height-only changes (browser chrome showing/hiding); re-pin on real resizes
+        if (window.innerWidth === lastW && Math.abs(window.innerHeight - lastH) < 150) return;
+        lastW = window.innerWidth;
+        lastH = window.innerHeight;
+        track.style.setProperty("--process-vh", `${window.innerHeight}px`);
+      };
+      pinVh();
+      window.addEventListener("resize", pinVh);
+      const st = ScrollTrigger.create({
         trigger: track,
         start: "top top",
         end: "bottom bottom",
         onUpdate: (self) => {
-          const idx = Math.min(total - 1, Math.floor(self.progress * total));
-          textItems.forEach((s, i) => s.classList.toggle("active", i === idx));
-          imgItems.forEach((s, i) => s.classList.toggle("active", i === idx));
+          setIdx(self.progress);
+          if (deskHead.current) deskHead.current.style.transform = `translateX(${self.progress * 100}%)`;
         },
       });
       return () => {
-        trigger.kill();
-        textItems.forEach((s, i) => s.classList.toggle("active", i === 0));
-        imgItems.forEach((s, i) => s.classList.toggle("active", i === 0));
+        st.kill();
+        window.removeEventListener("resize", pinVh);
       };
     });
 
-    // Mobile: cinematic focus + a node that glides down the spine on scroll.
+    // mobile: stacked beats, the strip sticks under the nav and tracks progress
     mm.add("(max-width: 767px)", () => {
-      const items = track.querySelectorAll<HTMLElement>(".process-stage-item");
-      if (!items.length) return;
-      const io = new IntersectionObserver(
-        (entries) => entries.forEach((e) => e.target.classList.toggle("mob-focus", e.isIntersecting)),
-        { rootMargin: "-40% 0px -40% 0px", threshold: 0 },
-      );
-      items.forEach((it) => io.observe(it));
-
-      const stagesEl = track.querySelector<HTMLElement>(".process-stages");
-      const dot = track.querySelector<HTMLElement>(".process-spine-dot");
-      let raf = 0;
-      const update = () => {
-        raf = 0;
-        if (!stagesEl || !dot) return;
-        const rect = stagesEl.getBoundingClientRect();
-        const p = (window.innerHeight / 2 - rect.top) / rect.height;
-        const clamped = Math.max(0, Math.min(1, p));
-        dot.style.top = `${6 + clamped * (rect.height - 12)}px`;
-      };
-      const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-      window.addEventListener("scroll", onScroll, { passive: true });
-      update();
-
-      return () => {
-        io.disconnect();
-        window.removeEventListener("scroll", onScroll);
-        if (raf) cancelAnimationFrame(raf);
-      };
+      const stack = stackRef.current;
+      if (!stack) return;
+      const st = ScrollTrigger.create({
+        trigger: stack,
+        start: "top 60%",
+        end: "bottom 60%",
+        onUpdate: (self) => {
+          setIdx(self.progress);
+          if (mobHead.current) mobHead.current.style.transform = `translateX(${self.progress * 100}%)`;
+        },
+      });
+      return () => st.kill();
     });
 
     return () => mm.revert();
@@ -99,58 +316,97 @@ export function Process() {
   return (
     <section id="process" className="process">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
-      <div ref={trackRef} className="process-track">
-        <div className="process-stage">
-          <div className="mx-auto grid w-full max-w-[1480px] grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-20">
-            <div className="process-stages">
-              <span className="process-spine-dot md:hidden" aria-hidden />
-              {stages.map((s, i) => (
-                <div key={s.num} className={`process-stage-item ${i === 0 ? "active" : ""}`}>
-                  <span className="mono-label">003 / Process</span>
-                  <div
-                    className="font-display font-light text-brand"
-                    style={{ fontSize: "clamp(100px, 18vw, 280px)", lineHeight: 0.85, letterSpacing: "-0.05em", fontVariationSettings: "'opsz' 144, 'WONK' 1" }}
-                  >
-                    {s.num}
-                  </div>
-                  <h3 className="display my-4" style={{ fontSize: "clamp(40px, 5vw, 72px)", lineHeight: 1 }}>
-                    {s.title}
-                  </h3>
-                  <p className="max-w-[38ch] text-[17px] leading-relaxed text-bone-dim">{s.body}</p>
-                  <div className="relative mt-8 aspect-[4/3] w-full overflow-hidden rounded border border-line md:hidden">
-                    <Image
-                      src={s.img}
-                      alt={`RJ Framing — ${s.title} stage of a custom framing build in the Greater Toronto Area`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="process-mob-img object-cover"
-                      style={{ objectPosition: (s as { imgPos?: string }).imgPos ?? "center" }}
-                    />
-                  </div>
-                  <div className="mt-10 flex items-center gap-4">
-                    <span className="mono-label">{s.num} / 04</span>
-                    <div className="relative h-px flex-1 overflow-hidden bg-line">
-                      <span className="absolute bg-bone" style={{ inset: "0 0 0 0" }} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            <div className="process-images relative aspect-[4/5] w-full hidden md:block">
-              {stages.map((s, i) => (
-                <Image
-                  key={s.num}
-                  src={s.img}
-                  alt={`RJ Framing — ${s.title} stage of a custom framing build in the Greater Toronto Area`}
-                  fill
-                  sizes="50vw"
-                  className={`process-img-stage object-cover rounded border border-line ${i === 0 ? "active" : ""}`}
-                  style={{ objectPosition: (s as { imgPos?: string }).imgPos ?? "center" }}
+      {/* intro */}
+      <div className="mx-auto max-w-[1480px] px-6 pt-24 md:px-16 md:pt-36">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-[200px_1fr] md:gap-16">
+          <div className="flex flex-col gap-2.5 pt-4">
+            <span className="mono-label">003</span>
+            <span className="mono-label bright">Process</span>
+          </div>
+          <div>
+            <h2
+              ref={headingRef}
+              className="display max-w-[1100px] text-bone"
+              style={{ fontSize: "clamp(34px, 4.6vw, 72px)", lineHeight: 1.02 }}
+            >
+              <span className="ph-text">We&apos;re the part of your build between</span>{" "}
+              <span className="ph-pill relative mx-1 inline-block h-[0.78em] w-[1.9em] translate-y-[0.08em] overflow-hidden rounded-full border border-line align-baseline">
+                <Image src="/images/project-05-interior-joists.jpg" alt="" fill sizes="160px" className="object-cover" />
+              </span>{" "}
+              <span className="ph-text">
+                the foundation and the <em>drywall.</em>
+              </span>
+            </h2>
+            <p className="mt-6 max-w-[56ch] text-[17px] leading-relaxed text-bone-dim">
+              Every job runs the same four steps. Here is what we need from you at each one, and what you get back.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* desktop: sticky stage */}
+      <div ref={trackRef} className="process-track relative hidden md:block" style={{ height: `${beats.length * 85 + 100}vh` }}>
+        <div className="sticky top-0 flex flex-col pb-8 pt-28" style={{ height: "var(--process-vh, 100vh)" }}>
+          <div className="grid min-h-0 flex-1 grid-cols-12 gap-10 pr-16">
+            <div className="relative col-span-7 min-h-0">
+              {beats.map((b, i) => (
+                <Plate
+                  key={b.img}
+                  beat={b}
+                  on={i === active}
+                  className={`process-plate-stack absolute inset-0 rounded-r-sm ${i <= active ? "shown" : ""}`}
                 />
               ))}
             </div>
+
+            <div className="relative col-span-5 self-center">
+              <div className="grid">
+                {beats.map((b, i) => (
+                  <article
+                    key={b.title}
+                    aria-hidden={i !== active}
+                    className={`process-copy col-start-1 row-start-1 ${i === active ? "now" : i < active ? "past" : ""}`}
+                  >
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand">
+                      Step {pad(i + 1)} &middot; {b.step}
+                    </span>
+                    <h3 className="display mt-4" style={{ fontSize: "clamp(32px, 3.4vw, 54px)", lineHeight: 1.02 }}>
+                      {b.title}
+                    </h3>
+                    <p className="mt-5 max-w-[44ch] text-[17px] leading-relaxed text-bone-dim">{b.body}</p>
+                    <Handoff beat={b} />
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
+
+          <div className="mt-8 px-16">
+            <Schedule active={active} headRef={deskHead} />
+          </div>
+        </div>
+      </div>
+
+      {/* mobile: strip sticks under the nav, beats stack */}
+      <div className="pb-24 md:hidden">
+        <div className="sticky top-14 z-20 mt-10 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-sm">
+          <Schedule active={active} headRef={mobHead} compact />
+        </div>
+        <div ref={stackRef} className="px-6">
+          {beats.map((b, i) => (
+            <article key={b.title} className="pt-12">
+              <Plate beat={b} on={i === active} className="relative aspect-[4/5] w-full rounded-sm border border-line" />
+              <span className="mt-6 block font-mono text-[11px] uppercase tracking-[0.2em] text-brand">
+                Step {pad(i + 1)} &middot; {b.step}
+              </span>
+              <h3 className="display mt-3" style={{ fontSize: "clamp(30px, 8vw, 40px)", lineHeight: 1.05 }}>
+                {b.title}
+              </h3>
+              <p className="mt-4 text-[16px] leading-relaxed text-bone-dim">{b.body}</p>
+              <Handoff beat={b} />
+            </article>
+          ))}
         </div>
       </div>
     </section>

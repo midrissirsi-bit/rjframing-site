@@ -57,7 +57,7 @@ export function Manifesto() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-[200px_1fr] md:gap-16">
           <div className="flex flex-col gap-2.5 pt-4">
             <span className="mono-label">001</span>
-            <span className="mono-label bright">Manifesto</span>
+            <span className="mono-label bright">How We Work</span>
           </div>
           <p
             ref={bodyRef}

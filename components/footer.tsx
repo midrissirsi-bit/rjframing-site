@@ -11,18 +11,19 @@ export function Footer() {
         <div className="flex flex-col gap-2 font-mono text-[11px] tracking-[0.16em] uppercase text-bone-mute">
           <span>© 2026 RJ Framing Inc.</span>
           <span>Licensed &amp; insured · Ontario</span>
+          <span>WSIB covered · Clearance on request</span>
           <span>Built with intention.</span>
         </div>
         <div className="flex flex-col gap-2">
           {[
-            { href: "https://www.instagram.com/rj.framing/", label: "Instagram" },
+            { href: "https://www.instagram.com/rjframing.ca/", label: "Instagram" },
             { href: "tel:+12896885951", label: "Call" },
             { href: "mailto:rjframinginc@gmail.com", label: "Email" },
           ].map((a) => (
             <a
               key={a.label}
               href={a.href}
-              className="w-fit py-2 font-mono text-[11px] tracking-[0.16em] uppercase text-bone-dim transition-colors hover:text-bone"
+              className="inline-flex min-h-[44px] w-fit items-center font-mono text-[11px] tracking-[0.16em] uppercase text-bone-dim transition-colors hover:text-bone"
             >
               ↗ {a.label}
             </a>

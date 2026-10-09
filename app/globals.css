@@ -113,11 +113,8 @@
 .rotate-hint .ring::after { content: ''; position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #29c5e8; border-radius: 50%; box-shadow: 0 0 6px #29c5e8; animation: orbit 4s linear infinite; transform-origin: 2px 11px; }
 @media (max-width: 767px) { .rotate-hint { display: none !important; } }
 
-/* === Project portfolio bento marquee === */
-@keyframes bento-marquee-scroll {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
+/* === Project portfolio bento marquee ===
+   Movement (auto-scroll, drag/swipe, momentum) is driven from work-gallery.tsx. */
 .bento-marquee-track {
   display: grid;
   grid-auto-flow: column;
@@ -125,26 +122,25 @@
   grid-auto-columns: 260px;
   gap: 12px;
   width: max-content;
-  animation: bento-marquee-scroll 45s linear infinite;
   will-change: transform;
-}
-.bento-marquee-wrap:hover .bento-marquee-track {
-  animation-play-state: paused;
 }
 @media (min-width: 768px) {
   .bento-marquee-track {
     grid-template-rows: repeat(2, 280px);
     grid-auto-columns: 380px;
     gap: 16px;
-    animation-duration: 50s;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .bento-marquee-track { animation: none; }
+@keyframes bento-slide-next {
+  from { transform: translateX(40px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
 }
-.bento-marquee-paused .bento-marquee-track {
-  animation-play-state: paused;
+@keyframes bento-slide-prev {
+  from { transform: translateX(-40px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
 }
+.bento-slide-next { animation: bento-slide-next 0.3s cubic-bezier(0.22,0.61,0.36,1) both; }
+.bento-slide-prev { animation: bento-slide-prev 0.3s cubic-bezier(0.22,0.61,0.36,1) both; }
 @keyframes bento-lightbox-fade {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -167,21 +163,83 @@
 .reveal-up { opacity: 0; transform: translateY(40px); transition: opacity 1s cubic-bezier(.22,.61,.36,1), transform 1s cubic-bezier(.22,.61,.36,1); }
 .reveal-up.lit { opacity: 1; transform: translateY(0); }
 
-.process { background: linear-gradient(180deg, #0d1219 0%, transparent 8%, transparent 92%, #0d1219 100%), #14181f; }
-.process-track { height: 400vh; position: relative; }
-.process-stage { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0 clamp(20px, 4vw, 64px); }
-.process-stages { display: grid; }
-.process-stage-item { grid-column: 1; grid-row: 1; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; }
-.process-stage-item.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+/* === Process: RJ's slot in the build schedule ===
+   Plates stack; each one is raised from the bottom like a wall going up. */
+.process { background: linear-gradient(180deg, #0d1219 0%, transparent 6%, transparent 94%, #0d1219 100%), #14181f; }
 
-/* Image stack on the right side of the pinned process — swaps with text */
-.process-img-stage {
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  filter: grayscale(0.15) contrast(1.05) brightness(0.92);
+.process-plate-stack { clip-path: inset(100% 0 0 0); transition: clip-path 0.9s cubic-bezier(.65,0,.25,1); }
+.process-plate-stack.shown { clip-path: inset(0 0 0 0); }
+.process-plate-img { transform: scale(1.08); transition: transform 1.4s cubic-bezier(.22,.61,.36,1); }
+.process-plate.on .process-plate-img { transform: scale(1); }
+.process-plate.on .process-plate-img > img { animation: process-drift 16s ease-in-out 1.4s infinite alternate; }
+@keyframes process-drift { from { transform: scale(1) translate3d(0,0,0); } to { transform: scale(1.045) translate3d(-1.2%, -0.8%, 0); } }
+
+/* notes: dot lands, leader line draws, label arrives; all three leave when the plate does */
+.process-note { gap: 0; pointer-events: none; z-index: 2; }
+.process-note-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid #29c5e8; background: rgba(6,7,9,.55);
+  transform: scale(0); transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+  transition-delay: inherit;
 }
-.process-img-stage.active { opacity: 1; transform: scale(1); }
+.process-note-line {
+  width: 44px; height: 1px; background: #29c5e8; flex-shrink: 0;
+  transform: scaleX(0); transition: transform .45s cubic-bezier(.22,.61,.36,1);
+}
+.process-note-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  width: max-content; line-height: 1.35; color: #eef2f5; background: rgba(6,7,9,.72); border: 1px solid rgba(41,197,232,.35);
+  padding: 6px 9px; opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .4s ease;
+}
+.process-plate.on .process-note-dot { transform: scale(1); }
+.process-plate.on .process-note-line { transform: scaleX(1); }
+.process-plate.on .process-note-label { opacity: 1; transform: none; }
+.process-plate:not(.on) .process-note * { transition-delay: 0s !important; transition-duration: .2s; }
+.process-plate.on .process-note-dot::after {
+  content: ""; position: absolute; inset: -1.5px; border-radius: 50%;
+  animation: pulse-anim 2.4s infinite;
+}
+.process-note-dot { position: relative; }
+
+/* copy: the current step arrives from below, the last one leaves upward */
+.process-copy { opacity: 0; transform: translateY(28px); transition: opacity .55s ease, transform .7s cubic-bezier(.22,.61,.36,1); pointer-events: none; }
+.process-copy.past { transform: translateY(-28px); }
+.process-copy.now { opacity: 1; transform: none; pointer-events: auto; transition-delay: .15s; }
+
+/* schedule strip */
+.process-seg {
+  position: relative; display: flex; align-items: flex-end; padding: 0 10px 8px; min-width: 0;
+  border-top: 1px solid #2a323e; background: rgba(255,255,255,.02);
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+}
+.process-seg span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.process-seg.ghost { color: #6b7480; }
+.process-seg.rj { color: #8a96a6; border-top-color: rgba(41,197,232,.35); background: rgba(41,197,232,.05); transition: background .5s ease, color .5s ease, border-color .5s ease; }
+.process-seg.rj b { font-weight: 500; margin-right: 4px; }
+.process-seg.rj.done { color: #d6dde5; background: rgba(41,197,232,.12); border-top-color: #29c5e8; }
+.process-seg.rj.now { color: #fff; background: rgba(41,197,232,.2); }
+.process-head { transition: transform .12s linear; }
+.process-head-line {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #29c5e8;
+  box-shadow: 0 0 0 1px rgba(6,7,9,.6);
+}
+.process-head-line::before {
+  content: ""; position: absolute; top: -4px; left: 50%; width: 8px; height: 8px; margin-left: -4px;
+  background: #29c5e8; transform: rotate(45deg);
+}
+
+@media (max-width: 767px) {
+  .process-seg { padding: 0 6px 7px; font-size: 9.5px; letter-spacing: .08em; }
+  .process-seg.rj b { display: block; margin: 0 0 1px; }
+  .process-seg.rj span { white-space: normal; line-height: 1.15; }
+  .process-note-label { font-size: 10px; letter-spacing: .1em; padding: 5px 7px; }
+  .process-note-line { width: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-plate-stack, .process-plate-img, .process-copy, .process-note * { transition-duration: .01s !important; transition-delay: 0s !important; }
+  .process-plate.on .process-plate-img > img, .process-plate.on .process-note-dot::after { animation: none; }
+}
 
 .pulse-dot { animation: pulse-anim 2.4s infinite; }
 @keyframes pulse-anim {
@@ -363,50 +421,6 @@
 }
 
 /* ───────────────────────────────────────────────────────────────
-   MOBILE — Process section. On desktop it is a 400vh pinned
-   scroll-jack with an image stack. On mobile that left the right
-   half empty for ~4 screen-heights (dead space). Here we un-pin it
-   and let the four stages flow normally, top to bottom.
-   ─────────────────────────────────────────────────────────────── */
-@media (max-width: 767px) {
-  .process-track { height: auto; }
-  .process-stage {
-    position: static;
-    height: auto;
-    display: block;
-    padding: 64px clamp(20px, 6vw, 36px);
-  }
-  .process-stages { display: block; }
-  .process-stage-item,
-  .process-stage-item.active {
-    grid-column: auto;
-    grid-row: auto;
-    transform: none;
-    pointer-events: auto;
-    opacity: 0.42;
-    padding-bottom: 48px;
-    margin-bottom: 48px;
-    border-bottom: 1px solid #232a36;
-    transition: opacity 0.6s ease;
-  }
-  .process-stage-item.mob-focus { opacity: 1; }
-  .process-mob-img {
-    filter: grayscale(0.45) brightness(0.62);
-    transition: filter 0.85s ease;
-  }
-  .process-stage-item.mob-focus .process-mob-img {
-    filter: grayscale(0) brightness(1.02);
-  }
-  .process-stage-item:last-child {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: none;
-  }
-  /* the "003 / Process" tag only needs to appear once when stacked */
-  .process-stage-item:not(:first-child) > .mono-label { display: none; }
-}
-
-/* ───────────────────────────────────────────────────────────────
    ATMOSPHERE + TACTILITY (Batch 1) — film grain for depth and
    touch-press feedback so the UI feels alive on a phone.
    ─────────────────────────────────────────────────────────────── */
@@ -458,43 +472,3 @@
   box-shadow: 0 2px 14px -7px rgba(41, 197, 232, 0.75);
 }
 
-/* ───────────────────────────────────────────────────────────────
-   MOBILE — Process timeline spine. A cyan blueprint line threads
-   the four stacked stages together, with a node at each numeral.
-   ─────────────────────────────────────────────────────────────── */
-@media (max-width: 767px) {
-  .process-stages {
-    position: relative;
-    padding-left: 26px;
-  }
-  .process-stages::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 6px;
-    bottom: 6px;
-    width: 1px;
-    background: linear-gradient(180deg, rgba(41, 197, 232, 0.45) 0%, rgba(41, 197, 232, 0.22) 60%, rgba(41, 197, 232, 0.08) 100%);
-  }
-  /* a single node that glides down the spine, driven by scroll position */
-  .process-spine-dot {
-    position: absolute;
-    left: 4px;
-    top: 6px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #29c5e8;
-    box-shadow: 0 0 16px rgba(41, 197, 232, 0.95);
-    transform: translate(-50%, -50%);
-    transition: top 0.1s linear;
-    z-index: 2;
-  }
-  .process-spine-dot::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    animation: pulse-anim 2.4s infinite;
-  }
-}

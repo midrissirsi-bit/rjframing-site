@@ -97,7 +97,7 @@ const schema = {
       closes: "14:00",
     },
   ],
-  sameAs: ["https://www.instagram.com/rj.framing/"],
+  sameAs: ["https://www.instagram.com/rjframing.ca/"],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Framing Services",
