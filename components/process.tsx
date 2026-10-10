@@ -333,7 +333,7 @@ export function Process() {
 
       {/* mobile: strip sticks under the nav, beats stack */}
       <div className="pb-24 md:hidden">
-        <div className="sticky top-14 z-20 mt-10 border-y border-line bg-bg/95 px-6 py-3 backdrop-blur-sm">
+        <div className="sticky top-14 z-20 mt-10 border-y border-line bg-bg px-6 py-3 [transform:translateZ(0)] [backface-visibility:hidden]">
           <Schedule active={active} headRef={mobHead} compact />
         </div>
         <div ref={stackRef} className="px-6">
