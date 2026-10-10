@@ -17,13 +17,11 @@
     text-rendering: optimizeLegibility;
   }
   ::selection { background: #29c5e8; color: #0d1219; }
-  /* Phones: the page only ever moves vertically. `clip` on html as well as body
-     (body alone is ignored by mobile browsers), and clip rather than hidden so the
-     sticky sections keep sticking. Touch is vertical-pan + pinch-zoom only; the
-     gallery strip and lightbox handle their own sideways swipes in JS, so they
-     still work (they set their own touch-action, which narrows this one). */
+  /* Phones: touch is vertical-pan + pinch-zoom only, so the page can't be dragged sideways.
+     Deliberately NO overflow-x: clip on html/body: on iOS Safari a clipping ancestor makes
+     every sticky element (Process schedule strip, hero) shake while scrolling. Nothing on the
+     page is wider than the screen anyway. The gallery strip and lightbox do their own swipes. */
   @media (max-width: 767px) {
-    html, body { overflow-x: clip; overscroll-behavior-x: none; }
     body { touch-action: pan-y pinch-zoom; }
   }
   html.lenis, html.lenis body { height: auto; }
@@ -179,8 +177,8 @@
 /* === Process: RJ's slot in the build schedule ===
    Plates stack; each one is raised from the bottom like a wall going up. */
 .process { background: linear-gradient(180deg, #0d1219 0%, transparent 6%, transparent 94%, #0d1219 100%), #14181f;
-  /* vertical only while in this section: clip (not hidden) so the sticky stage still sticks */
-  overflow-x: clip; touch-action: pan-y pinch-zoom; }
+  /* vertical-only touch here. NO overflow clip: on iOS Safari any clipping ancestor of a sticky element forces it onto main-thread positioning, and the sticky bar visibly shakes while scrolling. */
+  touch-action: pan-y pinch-zoom; }
 
 .process-plate-stack { clip-path: inset(100% 0 0 0); transition: clip-path 0.9s cubic-bezier(.65,0,.25,1); }
 .process-plate-stack.shown { clip-path: inset(0 0 0 0); }
