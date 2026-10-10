@@ -245,11 +245,9 @@ export function Process() {
       };
     });
 
-    // mobile: stacked beats, the strip sticks under the nav. Nothing inside the
-    // sticky strip is touched while scrolling: on iOS every per-frame change to a
-    // sticky element's contents makes Safari re-commit it at the main thread's
-    // (stale) scroll offset, and the whole bar visibly shakes. The playhead glides
-    // to each step instead (see the effect below), so the strip only changes 4 times.
+    // mobile: stacked beats, the strip sticks under the nav and the playhead tracks
+    // progress continuously. (The iOS shaking was never this: it was overflow clip on
+    // an ancestor of the sticky strip. Keep ancestors unclipped.)
     mm.add("(max-width: 767px)", () => {
       const stack = stackRef.current;
       if (!stack) return;
@@ -257,7 +255,10 @@ export function Process() {
         trigger: stack,
         start: "top 60%",
         end: "bottom 60%",
-        onUpdate: (self) => setIdx(self.progress),
+        onUpdate: (self) => {
+          setIdx(self.progress);
+          moveHead(mobHead.current, self.progress);
+        },
       });
       return () => st.kill();
     });
@@ -265,14 +266,6 @@ export function Process() {
     return () => mm.revert();
   }, []);
 
-  // mobile playhead: one compositor-run glide per step change, never per scroll frame
-  useEffect(() => {
-    const el = mobHead.current;
-    if (!el || !el.parentElement) return;
-    const x = ((active + 0.5) / beats.length) * el.parentElement.clientWidth;
-    el.style.transition = "transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1)";
-    el.style.transform = `translate3d(${Math.round(x)}px,0,0)`;
-  }, [active]);
 
   return (
     <section id="process" className="process">
