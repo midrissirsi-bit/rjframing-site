@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "/#work", label: "Portfolio" },
@@ -15,12 +15,16 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Condense the bar once the user starts scrolling
+  // Condense the bar once the user starts scrolling. A 1px sentinel sits 24px down
+  // the page; when it leaves the viewport we're past 24px. No scroll listener, so
+  // nothing runs per scroll frame, only when the state actually flips.
+  const sentinelRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const el = sentinelRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting && e.boundingClientRect.top < 0));
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   // Lock background scroll while the mobile menu is open
@@ -46,6 +50,7 @@ export function Nav() {
 
   return (
     <>
+      <div ref={sentinelRef} aria-hidden className="pointer-events-none absolute left-0 top-[24px] h-px w-px" />
       <nav
         className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 text-bone backdrop-blur-md transition-[height,background-color] duration-300 ${scrolled ? "h-14 md:h-20" : "h-16 md:h-24"}`}
         style={{ background: scrolled ? "rgba(10,13,18,0.9)" : "rgba(13,18,25,0.6)", borderBottom: "1px solid rgba(35,42,54,0.5)" }}

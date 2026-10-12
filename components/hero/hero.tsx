@@ -49,7 +49,6 @@ export function Hero() {
         <div className="absolute inset-0 hero-bg-grad">
           <ThreeFrame />
         </div>
-        <div className="grain absolute inset-0 z-[2] pointer-events-none" />
         <div className="hero-vignette absolute inset-0 z-[1] pointer-events-none" />
 
         <h1
